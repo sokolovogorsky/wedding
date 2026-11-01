@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадьба Дины & Дениса — 27 мая 2027</title>
+    <meta name="description" content="Приглашение на свадьбу Дины и Дениса. 27 мая 2027, Резиденция «Мария», г. Энгельс">
+    <meta property="og:title" content="Дина & Денис — 27.05.2027">
+    <meta property="og:description" content="Приглашение на свадьбу. Резиденция «Мария», г. Энгельс">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CUSTOM PROPERTIES ===== */
+        :root {
+            --white: #FFFFFF;
+            --alabaster: #F7F5F0;
+            --charcoal: #2C2624;
+            --text-primary: #2C2624;
+            --text-secondary: #706863;
+            --text-tertiary: #9E9690;
+            --accent: #B95C46;
+            --accent-warm: #E29C7F;
+            --border: #E8E3DD;
+            --border-light: #F0EEEB;
+            --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ===== RESET ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: var(--text-primary);
+            background: var(--white);
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--charcoal);
+        }
+
+        img { max-width: 100%; display: block; }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loading-initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+        .loading-bar {
+            width: 60px;
+            height: 1px;
+            background: var(--border);
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 100%;
+            background: var(--accent-warm);
+            animation: loadSlide 1.5s ease-in-out infinite;
+        }
+        @keyframes loadSlide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 3rem;
+            transition: all 0.5s ease;
+        }
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .nav-inner {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+        nav a {
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            transition: all var(--transition);
+            position: relative;
+        }
+        nav.scrolled a {
+            color: var(--text-secondary);
+        }
+        nav a:hover {
+            color: var(--text-primary);
+        }
+        nav.scrolled a:hover {
+            color: var(--text-primary);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0; right: 100%;
+            height: 1px;
+            background: currentColor;
+            transition: right 0.4s ease;
+        }
+        nav a:hover::after {
+            right: 0;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+            /* Background image — replace with your own photo */
+            background: url('image/IMG_2571.jpg') center 20% / cover no-repeat;
+            background-color: #C8C0B6; /* fallback if no image */
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-invite {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.4s forwards;
+        }
+
+        .hero-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 300;
+            letter-spacing: clamp(8px, 2vw, 20px);
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1.15;
+            opacity: 0;
+            animation: fadeUp 1.2s ease 0.7s forwards;
+        }
+        .hero-names .amp {
+            font-style: italic;
+            font-weight: 300;
+            margin: 0 0.15em;
+            letter-spacing: 0;
+        }
+
+        .hero-line {
+            width: 50px;
+            height: 1px;
+            background: rgba(255,255,255,0.5);
+            margin: 2rem auto;
+            opacity: 0;
+            animation: scaleIn 1s ease 1.1s forwards;
+        }
+
+        .hero-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            opacity: 0;
+            animation: fadeUp 1s ease 1.3s forwards;
+        }
+
+        .hero-venue {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255,255,255,0.7);
+            margin-top: 0.6rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.5s forwards;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 2s forwards;
+        }
+        .hero-scroll-text {
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            writing-mode: vertical-rl;
+        }
+        .hero-scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            animation: scrollPulse 2.5s ease infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ===== SECTION SYSTEM ===== */
+        section {
+            position: relative;
+            padding: 120px 20px;
+        }
+        .section-alt {
+            background: var(--alabaster);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .section-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 1.2rem;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+        }
+        .section-line {
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            margin: 1.5rem auto 0;
+        }
+
+        /* ===== STORY — new layout ===== */
+        .story-section { background: var(--white); }
+
+        .story-container {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        /* Centered text-only blocks */
+        .story-block-center {
+            text-align: center;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* Side-by-side blocks */
+        .story-block-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .story-block-side.reverse {
+            direction: rtl;
+        }
+        .story-block-side.reverse .story-text {
+            direction: ltr;
+        }
+        .story-block-side .story-photo-wrap {
+            direction: ltr;
+        }
+
+        .story-photo-wrap {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-light);
+        }
+        .story-photo {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .story-photo:hover { transform: scale(1.04); }
+
+        .story-year {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 0.6rem;
+        }
+        .story-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.6rem;
+        }
+        .story-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .story-block-side {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                direction: ltr !important;
+            }
+            .story-block-side.reverse .story-text {
+                direction: ltr;
+            }
+            .story-block-side .story-photo-wrap {
+                order: -1;
+            }
+            .story-container { gap: 3rem; }
+        }
+
+        /* ===== COUNTDOWN ===== */
+        .countdown-section {
+            background: var(--white);
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        /* ===== INFO MOSAIC ===== */
+        .info-mosaic-section {
+            background: var(--alabaster);
+            padding: 6rem 2rem;
+        }
+        .info-mosaic-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            grid-template-rows: auto;
+            gap: 1.5rem;
+        }
+        /* Bento layout assignments */
+        .mosaic-card.bento-countdown  { grid-column: 1 / -1; }
+        .mosaic-card.bento-program    { grid-column: 1 / 2; }
+        .mosaic-card.bento-venue      { grid-column: 2 / 3; }
+        .mosaic-card.bento-transfer   { grid-column: 1 / -1; }
+        .mosaic-card.bento-dresscode  { grid-column: 1 / 2; }
+        .mosaic-card.bento-gifts      { grid-column: 2 / 3; }
+
+        .mosaic-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+        }
+        .mosaic-card.full-width {
+            grid-column: 1 / -1;
+            align-items: center;
+            text-align: center;
+        }
+        .mosaic-card.center-text {
+            text-align: center;
+            align-items: center;
+        }
+        .mosaic-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .mosaic-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        /* Map adjustments */
+        .mosaic-map {
+            width: 100%;
+            height: 220px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .mosaic-map iframe {
+            width: 100%; height: 100%; border: 0;
+            filter: grayscale(60%) contrast(1.05);
+        }
+
+        /* Micro-components inside Mosaic */
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .countdown-card {
+            width: 90px;
+            padding: 1.5rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--alabaster);
+            text-align: center;
+        }
+        .countdown-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            line-height: 1;
+            display: block;
+        }
+        .countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+            display: block;
+        }
+        .program-item {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 1rem;
+            align-items: baseline;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+        .program-item:last-child { border-bottom: none; }
+        .program-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+        }
+        .program-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        .program-desc {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-top: 0.2rem;
+        }
+        .dresscode-palette {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .color-swatch {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+        }
+        .venue-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .venue-address {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .info-mosaic-grid { grid-template-columns: 1fr; }
+            .mosaic-card.bento-countdown,
+            .mosaic-card.bento-program,
+            .mosaic-card.bento-venue,
+            .mosaic-card.bento-transfer,
+            .mosaic-card.bento-dresscode,
+            .mosaic-card.bento-gifts { grid-column: 1 / -1; }
+            .mosaic-card { padding: 2rem 1.5rem; }
+        }
+
+        /* ===== Q&A ===== */
+        .qna-section {
+            background: var(--white);
+            border-top: 1px solid var(--border);
+        }
+        .qna-grid {
+            max-width: 860px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .qna-card {
+            background: var(--alabaster);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+        }
+        .qna-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .qna-question {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .qna-answer {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .qna-answer a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-warm);
+            transition: border-color var(--transition);
+        }
+        .qna-answer a:hover {
+            border-color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .qna-grid { grid-template-columns: 1fr; }
+            .qna-card { padding: 2rem 1.5rem; }
+        }
+
+        /* ===== RSVP ===== */
+        .rsvp-section {
+            background: var(--alabaster);
+            border-top: 1px solid var(--border);
+        }
+        .rsvp-wrapper {
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+        .form-group label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 0.6rem;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            transition: all var(--transition);
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-bottom-color: var(--charcoal);
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            border: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .attendance-options {
+            display: flex;
+            gap: 1rem;
+        }
+        .attendance-option {
+            flex: 1;
+        }
+        .attendance-option input[type="radio"] { display: none; }
+        .attendance-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: 0.85rem !important;
+            letter-spacing: 1px !important;
+            text-transform: none !important;
+            color: var(--text-secondary) !important;
+            font-family: 'Cormorant Garamond', serif !important;
+        }
+        .attendance-option input:checked + label {
+            border-color: var(--charcoal);
+            color: var(--text-primary) !important;
+            background: var(--white);
+        }
+        .attendance-option label:hover {
+            border-color: var(--text-tertiary);
+        }
+
+        .rsvp-submit {
+            padding: 1.1rem 3rem;
+            background: var(--charcoal);
+            color: var(--white);
+            border: 1px solid var(--charcoal);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all var(--transition);
+            align-self: center;
+            margin-top: 1rem;
+        }
+        .rsvp-submit:hover {
+            background: transparent;
+            color: var(--charcoal);
+        }
+        .rsvp-submit:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .rsvp-status {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-style: italic;
+            min-height: 1.5em;
+        }
+        .rsvp-status.success { color: #6B8E6B; }
+        .rsvp-status.error { color: #C0756B; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-box {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 3rem;
+            transform: translateY(15px);
+            transition: transform 0.5s ease;
+        }
+        .modal-overlay.active .modal-box { transform: translateY(0); }
+        .modal-emoji { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        .modal-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .modal-close {
+            padding: 0.8rem 2.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--charcoal);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        .modal-close:hover {
+            background: var(--charcoal);
+            color: var(--white);
+        }
+
+        /* ===== COMBINED FOOTER & CHAT ===== */
+        .footer-section {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            background-image: url('image/IMG_5829.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            padding-top: 25vh;
+        }
+        .footer-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+        .footer-chat-content {
+            position: relative;
+            z-index: 3;
+            max-width: 600px;
+            padding: 0 2rem;
+            color: #ffffff;
+        }
+        .chat-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 1rem;
+        }
+        .chat-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+            line-height: 1.25;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .chat-desc {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .chat-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.1rem 2.8rem;
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: all var(--transition);
+        }
+        .chat-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .chat-link .arrow {
+            transition: transform 0.3s ease;
+            font-size: 14px;
+        }
+        .chat-link:hover .arrow {
+            transform: translateX(5px);
+        }
+        .footer-bottom {
+            position: relative;
+            z-index: 3;
+            padding-bottom: 3rem;
+            color: #ffffff;
+        }
+        .footer-monogram {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .footer-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+        .footer-divider {
+            width: 40px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.6);
+            margin: 1.5rem auto;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scaleX(0); }
+            to { opacity: 1; transform: scaleX(1); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== FALLING PETALS (very subtle) ===== */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9990;
+            animation: petalFall linear forwards;
+        }
+        @keyframes petalFall {
+            0% { opacity: 0; transform: translateY(-5vh) rotate(0deg) translateX(0); }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.15; }
+            100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(60px); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            section { padding: 80px 20px; }
+
+            .hero-names { font-size: clamp(2.5rem, 10vw, 4rem); }
+
+            .nav-inner { gap: 1.5rem; }
+            nav a { font-size: 9px; letter-spacing: 2px; }
+
+            .venue-card {
+                grid-template-columns: 1fr;
+            }
+            .venue-map { min-height: 250px; }
+            .venue-info { padding: 2.5rem; }
+
+            .chat-section { padding: 40px 16px 60px; }
+            .chat-card {
+                height: 380px;
+                border-radius: 8px;
+            }
+            .chat-bg-img {
+                object-position: center 75%;
+            }
+            .chat-content {
+                padding: 1.8rem 1.2rem;
+            }
+
+            .attendance-options { flex-direction: column; }
+
+            .countdown-card { width: 80px; padding: 1.2rem 0.5rem; }
+            .countdown-number { font-size: 2rem; }
+
+            .program-item { grid-template-columns: 65px 1fr auto; gap: 1rem; }
+
+            .dresscode-palette { gap: 0.8rem; }
+            .color-swatch { width: 40px; height: 40px; }
+        }
+
+        @media (max-width: 480px) {
+            section { padding: 60px 16px; }
+            nav { padding: 1.2rem 1rem; }
+            .nav-inner { gap: 1rem; }
+            .venue-info { padding: 2rem 1.5rem; }
+        }
+
+        /* ===== FILM GRAIN ===== */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 2s steps(2) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            30% { transform: translate(3%, -15%); }
+            50% { transform: translate(12%, 9%); }
+            70% { transform: translate(9%, 4%); }
+            90% { transform: translate(-1%, 7%); }
+        }
+
+
+
+        /* Remove static transform for reveal since GSAP takes over */
+        .reveal, .program-item {
+            visibility: hidden;
+        }
+
+        /* ===== MASCOT SECTION ===== */
+        .mascot-section { background: var(--white); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 20px 80px; overflow: hidden; position: relative; }
+        .mascot-wrap { position: relative; width: 420px; height: 220px; cursor: pointer; user-select: none; margin-bottom: 2rem; }
+        .wedding-altar { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 250px; height: auto; z-index: 1; }
+        .otter-left { position: absolute; bottom: 10px; left: 30px; width: 155px; height: auto; transform-origin: bottom right; animation: otterLeftIdle 3s ease-in-out infinite alternate; z-index: 3; }
+        .otter-right { position: absolute; bottom: 10px; right: 45px; width: 130px; height: auto; transform-origin: bottom left; animation: otterRightIdle 3s ease-in-out infinite alternate; z-index: 3; }
+        .mascot-heart { position: absolute; font-size: 1.5rem; opacity: 0; pointer-events: none; z-index: 2; }
+        .heart-1 { left: 45%; top: 30%; animation: heartFloat 4s ease-in-out infinite 0.5s; color: var(--accent); }
+        .heart-2 { left: 52%; top: 20%; animation: heartFloat 3.5s ease-in-out infinite 1.5s; color: var(--accent-warm); }
+        .heart-3 { left: 42%; top: 40%; animation: heartFloat 4.2s ease-in-out infinite 2s; color: var(--accent); }
+        .mascot-labels { position: absolute; top: -10px; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+        .m-label { position: absolute; display: flex; align-items: center; gap: 6px; }
+        .m-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--text-primary); font-style: italic; }
+        .label-denis { left: 10px; top: 30px; }
+        .label-dina { right: 10px; top: 30px; }
+        .mascot-caption { font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-tertiary); text-align: center; opacity: 0.8; margin-top: 1rem; }
+        .mascot-wrap:hover .otter-left { animation: otterLeftHug 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate; }
+        .mascot-wrap:hover .otter-right { animation: otterRightHug 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate; }
+        @keyframes otterLeftIdle { 0% { transform: translateX(0) rotate(0deg); } 100% { transform: translateX(4px) rotate(2deg); } }
+        @keyframes otterRightIdle { 0% { transform: translateX(0) rotate(0deg); } 100% { transform: translateX(-4px) rotate(-2deg); } }
+        @keyframes otterLeftHug { 0% { transform: translateX(0) rotate(0deg) scale(1); } 100% { transform: translateX(35px) rotate(6deg) scale(1.02); } }
+        @keyframes otterRightHug { 0% { transform: translateX(0) rotate(0deg) scale(1); } 100% { transform: translateX(-35px) rotate(-6deg) scale(1.02); } }
+        @keyframes heartFloat { 0% { transform: translateY(20px) scale(0.5); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-60px) scale(1.2); opacity: 0; } }
+        @media (max-width: 480px) { .mascot-wrap { width: 100%; height: 180px; } .otter-left { left: 5%; width: 135px; } .otter-right { right: 5%; width: 115px; } .label-denis { left: 0px; top: 10px; } .label-dina { right: 0px; top: 10px; } .m-name { font-size: 1.2rem; } }
+    </style>
+</head>
+<body>
+    <!-- Film Grain -->
+    <div class="film-grain"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading">
+        <div class="loading-initials">Д & Д</div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <a href="#home">Главная</a>
+            <a href="#story">История</a>
+            <a href="#info">Детали</a>
+            <a href="#rsvp">RSVP</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <p class="hero-invite">Мы приглашаем вас на нашу свадьбу</p>
+
+            <h1 class="hero-names">Дина <span class="amp">&</span> Денис</h1>
+
+            <div class="hero-line"></div>
+
+            <p class="hero-date">27 мая 2027</p>
+            <p class="hero-venue">Тритония · Саратов</p>
+        </div>
+
+        <div class="hero-scroll">
+            <span class="hero-scroll-text">Scroll</span>
+            <div class="hero-scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Love Story -->
+    <section class="story-section" id="story">
+        <div class="section-header">
+            <span class="section-label reveal">Наша история</span>
+            <h2 class="section-title reveal">Как всё начиналось</h2>
+            <div class="section-line reveal"></div>
+        </div>
+
+        <div class="story-container">
+            <!-- 1. Первая встреча — центр, без фото -->
+            <div class="story-block-center reveal">
+                <div class="story-year">Март 2022</div>
+                <div class="story-title">Первая встреча</div>
+                <div class="story-desc">Наша история началась прямо на рабочем месте — тогда мы ещё не знали, что эта встреча изменит всё.</div>
+            </div>
+
+            <!-- 2. Первое свидание — фото справа, текст слева -->
+            <div class="story-block-side reveal">
+                <div class="story-text">
+                    <div class="story-year">26 апреля</div>
+                    <div class="story-title">Первое свидание</div>
+                    <div class="story-desc">Бесконечные разговоры, улыбки и, конечно же, стаканчик любимого кофе из Surf Coffee. С этого дня мы не расставались.</div>
+                </div>
+                <div class="story-photo-wrap">
+                    <img src="image/photo_2026-10-30_19-48-30.jpg" alt="Первое свидание" class="story-photo" loading="lazy">
+                </div>
+            </div>
+
+            <!-- 3. Предложение — фото слева, текст справа -->
+            <div class="story-block-side reverse reveal">
+                <div class="story-text">
+                    <div class="story-year">27 апреля</div>
+                    <div class="story-title">Предложение в Кисловодске</div>
+                    <div class="story-desc">Среди живописных пейзажей Кисловодска прозвучал самый волнительный вопрос и самое счастливое «Да!».</div>
+                </div>
+                <div class="story-photo-wrap">
+                    <img src="image/ring.jpg" alt="Заветное «Да!»" class="story-photo" loading="lazy">
+                </div>
+            </div>
+
+            <!-- 4. День свадьбы — центр, без фото -->
+            <div class="story-block-center reveal">
+                <div class="story-year">27 мая 2027</div>
+                <div class="story-title">День нашей свадьбы</div>
+                <div class="story-desc">День, когда мы соединяем наши судьбы и начинаем новую главу — и мы безмерно рады разделить его с вами.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Mosaic Section -->
+    <section class="info-mosaic-section" id="info">
+        <div class="info-mosaic-grid">
+            
+            <!-- Countdown -->
+            <div class="mosaic-card bento-countdown full-width reveal">
+                <h2 class="mosaic-title">До нашего торжества</h2>
+                <div class="countdown-grid" style="margin-top:0;">
+                    <div class="countdown-card">
+                        <span class="countdown-number" id="days">---</span>
+                        <span class="countdown-label">дней</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-number" id="hours">--</span>
+                        <span class="countdown-label">часов</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-number" id="minutes">--</span>
+                        <span class="countdown-label">минут</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-number" id="seconds">--</span>
+                        <span class="countdown-label">секунд</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program -->
+            <div class="mosaic-card bento-program reveal">
+                <h2 class="mosaic-title">Программа дня</h2>
+                <div class="program-grid" style="max-width: 100%; margin:0;">
+                    <div class="program-item">
+                        <div class="program-time">15:00</div>
+                        <div>
+                            <div class="program-title">Сбор гостей</div>
+                            <div class="program-desc">Фуршет и welcome-напитки</div>
+                        </div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">16:00</div>
+                        <div>
+                            <div class="program-title">Церемония</div>
+                            <div class="program-desc">Торжественная выездная регистрация</div>
+                        </div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">17:00</div>
+                        <div>
+                            <div class="program-title">Банкет</div>
+                            <div class="program-desc">Праздничный ужин и поздравления</div>
+                        </div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">19:30</div>
+                        <div>
+                            <div class="program-title">Вечеринка</div>
+                            <div class="program-desc">Танцы и веселье до утра</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Venue -->
+            <div class="mosaic-card bento-venue reveal">
+                <h2 class="mosaic-title">Место проведения</h2>
+                <div class="venue-info" style="padding:0; text-align:center; box-shadow:none; border:none; background:transparent;">
+                    <h3 class="venue-name" style="font-size: 1.5rem;">Тритония</h3>
+                    <p class="venue-address">Саратов, с. Усть-Курдюм</p>
+                </div>
+                <!-- Yandex Map -->
+                <div class="mosaic-map">
+                    <iframe src="https://yandex.ru/map-widget/v1/?text=Тритония%20Саратов%20Усть-Курдюм" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+
+            <!-- Transfer -->
+            <div class="mosaic-card bento-transfer reveal" style="grid-column: 1 / -1;">
+                <h2 class="mosaic-title">Трансфер</h2>
+                <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+                    <div style="text-align: center; flex: 1; min-width: 200px;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-primary); line-height:1;">14:00</div>
+                        <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-tertiary); margin: 0.5rem 0 0.8rem;">отправление</div>
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-primary);">Сенной рынок → Усадьба</div>
+                        <div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.3rem;">~40 мин в пути</div>
+                    </div>
+                    <div style="width: 1px; background: var(--border); align-self: stretch;"></div>
+                    <div style="text-align: center; flex: 1; min-width: 200px;">
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-primary); line-height:1;">23:00</div>
+                        <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-tertiary); margin: 0.5rem 0 0.8rem;">обратно</div>
+                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-primary);">Усадьба → Сенной рынок</div>
+                        <div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.3rem;">~40 мин в пути</div>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 0.82rem; color: var(--text-tertiary); margin-top: 2rem;">
+                    Место сбора: <span style="color: var(--text-secondary);">Саратов, Сенной рынок</span>
+                </p>
+            </div>
+
+            <!-- Dresscode -->
+            <div class="mosaic-card bento-dresscode center-text reveal">
+                <h2 class="mosaic-title">Пожелания по стилю</h2>
+                <p>Мы не придерживаемся строгого дресс-кода, но будем рады, если ваш образ будет гармонировать с тёплой палитрой нашей свадьбы.</p>
+                <p style="margin-top: 0.8rem;">Нам близки оттенки: <em>терракотовый, персиковый, кремовый, винный, приглушённый зелёный</em>.</p>
+                <div class="dresscode-palette" style="margin-top: 1.5rem; justify-content: center;">
+                    <div class="color-swatch" style="background: #B95C46;" title="Терракотовый"></div>
+                    <div class="color-swatch" style="background: #E29C7F;" title="Персиковый"></div>
+                    <div class="color-swatch" style="background: #F4EFE6;" title="Кремовый"></div>
+                    <div class="color-swatch" style="background: #798965;" title="Приглушённый зелёный"></div>
+                    <div class="color-swatch" style="background: #8B3A36;" title="Винный"></div>
+                </div>
+            </div>
+
+            <!-- Gifts -->
+            <div class="mosaic-card bento-gifts center-text reveal">
+                <h2 class="mosaic-title">О подарках</h2>
+                <p>Мы будем рады разделить этот день с вами! Пожалуйста, не дарите нам живые цветы — они быстро завянут, а нам будет сложно забрать их после праздника.</p>
+                <p>Вместо этого мы будем очень рады бутылочке вашего любимого вина. Как-нибудь вечером мы откроем её на дегустации под чтение стихов и с теплом вспомним нашу свадьбу.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mascot Section -->
+    <section class="mascot-section reveal">
+        <div class="mascot-wrap" id="mascot">
+            <svg class="wedding-altar" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <line x1="20" y1="190" x2="100" y2="30" stroke="#8E6A50" stroke-width="5" stroke-linecap="round"/>
+                <line x1="180" y1="190" x2="100" y2="30" stroke="#8E6A50" stroke-width="5" stroke-linecap="round"/>
+                <path d="M 60 110 Q 100 30 140 110 Q 150 140 160 190" fill="none" stroke="#F4EFE6" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+                <path d="M 100 30 Q 80 10 70 25 Q 90 40 100 30" fill="#798965"/>
+                <path d="M 100 30 Q 120 10 130 25 Q 110 40 100 30" fill="#798965"/>
+                <path d="M 100 30 Q 80 40 60 50 Q 80 60 100 30" fill="#798965"/>
+                <path d="M 100 30 Q 120 40 140 50 Q 120 60 100 30" fill="#798965"/>
+                <circle cx="100" cy="30" r="14" fill="#B95C46" />
+                <circle cx="85" cy="45" r="11" fill="#E29C7F" />
+                <circle cx="115" cy="45" r="11" fill="#E29C7F" />
+                <circle cx="75" cy="65" r="9" fill="#8B3A36" />
+                <circle cx="125" cy="65" r="9" fill="#F4EFE6" />
+            </svg>
+
+            <div class="mascot-heart heart-1">❤️</div>
+            <div class="mascot-heart heart-2">💖</div>
+            <div class="mascot-heart heart-3">❤️</div>
+
+            <div class="mascot-labels">
+                <div class="m-label label-denis">
+                    <span class="m-name">Денис</span>
+                    <svg width="24" height="28" viewBox="0 0 24 28">
+                        <path d="M 4 8 Q 12 8 20 22" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round"/>
+                        <polyline points="14,20 20,22 22,16" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="m-label label-dina">
+                    <svg width="24" height="28" viewBox="0 0 24 28">
+                        <path d="M 20 8 Q 12 8 4 22" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round"/>
+                        <polyline points="10,20 4,22 2,16" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="m-name">Дина</span>
+                </div>
+            </div>
+
+            <svg class="otter-left" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 40 90 Q 0 115 5 120 Q 25 120 50 95" fill="#7D5C43" />
+                <ellipse cx="48" cy="75" rx="22" ry="35" fill="#7D5C43" />
+                <ellipse cx="48" cy="80" rx="24" ry="34" fill="#2C2624" />
+                <path d="M 38 52 L 48 85 L 58 52 Z" fill="#FFFFFF" />
+                <path d="M 40 60 L 48 64 L 40 68 Z M 56 60 L 48 64 L 56 68 Z" fill="#B95C46" />
+                <circle cx="48" cy="64" r="3" fill="#B95C46" />
+                <ellipse cx="32" cy="112" rx="12" ry="5" fill="#5A3F2A" />
+                <path d="M 28 110 L 26 115 M 32 110 L 32 115 M 36 110 L 38 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
+                <ellipse cx="62" cy="112" rx="12" ry="5" fill="#5A3F2A" />
+                <path d="M 58 110 L 56 115 M 62 110 L 62 115 M 66 110 L 68 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
+                <ellipse cx="50" cy="35" rx="26" ry="22" fill="#7D5C43" />
+                <ellipse cx="25" cy="28" rx="4" ry="6" fill="#7D5C43" transform="rotate(-20 25 28)" />
+                <ellipse cx="75" cy="28" rx="4" ry="6" fill="#7D5C43" transform="rotate(20 75 28)" />
+                <ellipse cx="50" cy="42" rx="16" ry="10" fill="#D3A27F" />
+                <ellipse cx="50" cy="37" rx="5" ry="3.5" fill="#2C2624" />
+                <path d="M 50 40.5 L 50 44 M 45 46 Q 50 49 55 46" stroke="#2C2624" stroke-width="1.5" fill="none" />
+                <path d="M 33 40 L 15 37 M 33 43 L 14 43 M 34 46 L 16 49" stroke="#5A3F2A" stroke-width="1.2" stroke-linecap="round" />
+                <path d="M 67 40 L 85 37 M 67 43 L 86 43 M 66 46 L 84 49" stroke="#5A3F2A" stroke-width="1.2" stroke-linecap="round" />
+                <circle cx="38" cy="30" r="2.5" fill="#2C2624" />
+                <circle cx="62" cy="30" r="2.5" fill="#2C2624" />
+                <ellipse cx="36" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.8" />
+                <ellipse cx="64" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.8" />
+                <path d="M 62 65 Q 85 68 73 80" stroke="#2C2624" stroke-width="11" stroke-linecap="round" fill="none" />
+                <ellipse cx="74" cy="80" rx="5" ry="4" fill="#7D5C43" />
+            </svg>
+
+            <svg class="otter-right" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 60 90 Q 100 115 95 120 Q 75 120 50 95" fill="#8E6A50" />
+                <path d="M 50 15 C 80 15, 90 50, 85 90 C 70 95, 30 95, 15 90 C 10 50, 20 15, 50 15 Z" fill="#FFFFFF" opacity="0.55" />
+                <ellipse cx="52" cy="75" rx="22" ry="35" fill="#8E6A50" />
+                <path d="M 32 75 Q 54 60 76 75 L 82 105 Q 54 115 26 105 Z" fill="#FFFFFF" />
+                <path d="M 42 62 Q 50 68 58 62" stroke="#E8E3DD" stroke-width="2" fill="none" stroke-linecap="round" />
+                <circle cx="50" cy="65" r="2" fill="#E8E3DD" />
+                <path d="M 45 80 Q 50 100 50 105 M 60 85 Q 65 100 65 102" stroke="#F0EEEB" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="38" cy="112" rx="12" ry="5" fill="#6B4B36" />
+                <path d="M 34 110 L 32 115 M 38 110 L 38 115 M 42 110 L 44 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
+                <ellipse cx="68" cy="112" rx="12" ry="5" fill="#6B4B36" />
+                <path d="M 64 110 L 62 115 M 68 110 L 68 115 M 72 110 L 74 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
+                <ellipse cx="50" cy="35" rx="26" ry="22" fill="#8E6A50" />
+                <circle cx="38" cy="18" r="4.5" fill="#E29C7F" />
+                <circle cx="48" cy="15" r="5" fill="#B95C46" />
+                <circle cx="58" cy="17" r="4" fill="#E29C7F" />
+                <ellipse cx="25" cy="28" rx="4" ry="6" fill="#8E6A50" transform="rotate(-20 25 28)" />
+                <ellipse cx="75" cy="28" rx="4" ry="6" fill="#8E6A50" transform="rotate(20 75 28)" />
+                <ellipse cx="50" cy="42" rx="16" ry="10" fill="#E5C2A4" />
+                <ellipse cx="50" cy="37" rx="5" ry="3.5" fill="#2C2624" />
+                <path d="M 50 40.5 L 50 44 M 45 46 Q 50 49 55 46" stroke="#2C2624" stroke-width="1.5" fill="none" />
+                <path d="M 33 40 L 15 37 M 33 43 L 14 43 M 34 46 L 16 49" stroke="#6B4B36" stroke-width="1.2" stroke-linecap="round" />
+                <path d="M 67 40 L 85 37 M 67 43 L 86 43 M 66 46 L 84 49" stroke="#6B4B36" stroke-width="1.2" stroke-linecap="round" />
+                <path d="M 34 30 Q 38 26 42 30" stroke="#2C2624" stroke-width="2" fill="none" stroke-linecap="round" />
+                <path d="M 58 30 Q 62 26 66 30" stroke="#2C2624" stroke-width="2" fill="none" stroke-linecap="round" />
+                <ellipse cx="36" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.9" />
+                <ellipse cx="64" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.9" />
+                <path d="M 35 65 Q 15 68 25 80" stroke="#8E6A50" stroke-width="9" stroke-linecap="round" fill="none" />
+            </svg>
+        </div>
+
+        <div class="mascot-caption reveal">Денис, Дина и их день <br> 27 мая 2027</div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp-section" id="rsvp">
+        <div class="section-header">
+            <span class="section-label reveal">Ждём ответа</span>
+            <h2 class="section-title reveal">Подтвердите присутствие</h2>
+            <div class="section-line reveal"></div>
+        </div>
+
+        <div class="rsvp-wrapper reveal">
+            <form class="rsvp-form" id="rsvp-form">
+                <div class="form-group">
+                    <label for="guest-name">Ваше имя и фамилия</label>
+                    <input type="text" id="guest-name" name="name" placeholder="Иван Иванов" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Вы придёте?</label>
+                    <div class="attendance-options">
+                        <div class="attendance-option">
+                            <input type="radio" id="attend-yes" name="attendance" value="yes" required>
+                            <label for="attend-yes">С радостью буду</label>
+                        </div>
+                        <div class="attendance-option">
+                            <input type="radio" id="attend-no" name="attendance" value="no">
+                            <label for="attend-no">К сожалению, нет</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-count">Количество персон (включая вас)</label>
+                    <input type="number" id="guest-count" name="guests" min="1" max="10" value="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-song">Трек, под который вы точно пойдете танцевать</label>
+                    <input type="text" id="guest-song" name="song" placeholder="Исполнитель и название песни">
+                </div>
+
+                <div class="form-group">
+                    <label for="guest-wishes">Пожелания или комментарий</label>
+                    <textarea id="guest-wishes" name="wishes" placeholder="Аллергия на орехи, веган..."></textarea>
+                </div>
+
+                <button type="submit" class="rsvp-submit magnetic" id="rsvp-btn">Отправить ответ</button>
+                <div class="rsvp-status" id="rsvp-status"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Thank You Modal -->
+    <div class="modal-overlay" id="thank-modal">
+        <div class="modal-box">
+            <div class="modal-emoji" id="modal-emoji">🎉</div>
+            <h3 class="modal-title" id="modal-title">Спасибо!</h3>
+            <p class="modal-text" id="modal-text">Мы очень рады, что вы будете с нами!</p>
+            <button class="modal-close" onclick="document.getElementById('thank-modal').classList.remove('active')">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Combined Footer & Telegram Chat -->
+    <footer class="footer-section">
+        <div class="footer-overlay"></div>
+        
+        <div class="footer-chat-content reveal">
+            <p class="chat-label">Будьте на связи</p>
+            <h3 class="chat-title">Присоединяйтесь к нашему свадебному чату</h3>
+            <p class="chat-desc">Здесь мы будем делиться всеми важными новостями, таймингом и фотографиями</p>
+            <a href="https://t.me" target="_blank" class="chat-link magnetic">
+                Вступить в Telegram-чат <span class="arrow">⟶</span>
+            </a>
+        </div>
+
+        <div class="footer-bottom reveal">
+            <div class="footer-monogram">Д & Д</div>
+            <div class="footer-divider"></div>
+            <p class="footer-date">27 · 05 · 2027</p>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+    'use strict';
+
+    // ========== LOADING SCREEN ==========
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loading').classList.add('hidden');
+        }, 1800);
+    });
+
+    // ========== NAV SCROLL ==========
+    const nav = document.getElementById('main-nav');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const y = window.pageYOffset;
+        nav.classList.toggle('scrolled', y > 80);
+        if (y > lastScroll && y > 200) {
+            nav.style.transform = 'translateY(-100%)';
+        } else {
+            nav.style.transform = 'translateY(0)';
+        }
+        lastScroll = y;
+    });
+
+    // ========== GSAP ANIMATIONS ==========
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Reveal elements gracefully
+    gsap.utils.toArray('.reveal, .program-item').forEach(el => {
+        gsap.fromTo(el, 
+            { autoAlpha: 0, y: 30 },
+            { 
+                autoAlpha: 1, 
+                y: 0, 
+                duration: 1, 
+                ease: "power2.out", 
+                scrollTrigger: { trigger: el, start: "top 85%" }
+            }
+        );
+    });
+
+    // 2. Vertical Parallax for all images (Hero, Story, Chat)
+    // Hero uses background-position
+    gsap.to(".hero", {
+        backgroundPosition: "50% 80%",
+        ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+    });
+    
+    // Story photo uses object-position
+    gsap.to(".story-photo", {
+        objectPosition: "50% 80%",
+        ease: "none",
+        scrollTrigger: { trigger: ".story-photo-wrap", start: "top bottom", end: "bottom top", scrub: true }
+    });
+
+    // Footer: CSS parallax via background-attachment:fixed — no GSAP needed
+
+    // ========== MAGNETIC BUTTONS ==========
+    document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+        });
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+        });
+    });
+
+    // ========== COUNTDOWN ==========
+    const weddingDate = new Date('2027-05-27T16:00:00+03:00');
+    function updateCountdown() {
+        const diff = weddingDate - new Date();
+        if (diff <= 0) {
+            ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '0');
+            return;
+        }
+        document.getElementById('days').textContent = Math.floor(diff / 864e5);
+        document.getElementById('hours').textContent = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(Math.floor((diff % 6e4) / 1e3)).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ========== SUBTLE PETALS ==========
+    function createPetal() {
+        const p = document.createElement('div');
+        p.classList.add('petal');
+        const s = Math.random() * 8 + 4;
+        const d = Math.random() * 8 + 8;
+        p.style.cssText = `
+            left:${Math.random()*100}vw; width:${s}px; height:${s}px;
+            background:hsla(25,30%,82%,0.35);
+            border-radius:50% 0 50% 50%;
+            animation-duration:${d}s;
+        `;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), (d + 1) * 1000);
+    }
+    setInterval(createPetal, 6000);
+
+    // ========== TELEGRAM CONFIG ==========
+    // ⚠️  ВНИМАНИЕ: токен бота хранится в открытом виде в клиентском коде.
+    // Любой, кто откроет исходник страницы, сможет его прочитать.
+    // Для продакшена рекомендуется вынести отправку на сервер (Google Apps Script,
+    // Cloudflare Worker, Formspree и т.д.) и не хранить токен во фронтенде.
+    const TELEGRAM_BOT_TOKEN = '8628753070:AAF6vBOa8hhQZpjnJqP6gmM1kUkW-K21JuI';
+    const TELEGRAM_CHAT_ID = '-5533327993';
+
+    // ========== RSVP FORM ==========
+    document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('rsvp-btn');
+        const statusEl = document.getElementById('rsvp-status');
+        const name = document.getElementById('guest-name').value.trim();
+        const attendance = document.querySelector('input[name="attendance"]:checked');
+        const guestCount = document.getElementById('guest-count').value;
+        const song = document.getElementById('guest-song') ? document.getElementById('guest-song').value.trim() : '';
+        const wishes = document.getElementById('guest-wishes').value.trim();
+
+        if (!name || !attendance) {
+            statusEl.className = 'rsvp-status error';
+            statusEl.textContent = 'Пожалуйста, заполните имя и укажите, придёте ли вы';
+            return;
+        }
+
+        const isAttending = attendance.value === 'yes';
+        const statusEmoji = isAttending ? '✅' : '❌';
+        const statusText = isAttending ? 'ПРИДЁТ' : 'НЕ ПРИДЁТ';
+
+        let message = `💍 *Свадьба Дины & Дениса — RSVP*\n\n`;
+        message += `${statusEmoji} *${statusText}*\n\n`;
+        message += `👤 *Гость:* ${name}\n`;
+        if (isAttending) message += `👥 *Количество:* ${guestCount}\n`;
+        if (song) message += `🎵 *Музыка:* ${song}\n`;
+        if (wishes) message += `💬 *Пожелания:* ${wishes}\n`;
+        message += `\n🕐 _${new Date().toLocaleString('ru-RU')}_`;
+
+        btn.disabled = true;
+        btn.textContent = 'Отправляем...';
+
+        try {
+            const resp = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'Markdown' })
+            });
+            const data = await resp.json();
+            if (data.ok) {
+                const modal = document.getElementById('thank-modal');
+                document.getElementById('modal-emoji').textContent = isAttending ? '🎉' : '💛';
+                document.getElementById('modal-title').textContent = 'Спасибо!';
+                document.getElementById('modal-text').textContent = isAttending
+                    ? 'Мы очень рады, что вы будете с нами!'
+                    : 'Мы будем скучать по вам!';
+                modal.classList.add('active');
+                this.reset();
+                statusEl.textContent = '';
+            } else {
+                throw new Error(data.description || 'Ошибка');
+            }
+        } catch (err) {
+            console.error('Telegram API error:', err);
+            statusEl.className = 'rsvp-status error';
+            statusEl.textContent = 'Не удалось отправить. Свяжитесь с нами напрямую';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Отправить ответ';
+        }
+    });
+
+    // Close modal
+    document.getElementById('thank-modal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+    });
+    </script>
+
+</body>
+</html>

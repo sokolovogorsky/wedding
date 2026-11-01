@@ -1,0 +1,118 @@
+/* assets/css/style.css */
+/* Custom styles for the wedding invitation site */
+
+/* Parallax background for hero */
+.hero-section {
+  background-image: url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  position: relative;
+  color: #fff;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 6rem 1rem;
+}
+
+/* Fade‑in animation for sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal {
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+}
+
+/* Gallery – simple masonry */
+.gallery-grid {
+  column-count: 3;
+  column-gap: 1rem;
+}
+.gallery-grid img {
+  width: 100%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Lightbox (very simple) */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+.lightbox:target {
+  display: flex;
+}
+
+/* Timeline for love story */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px solid #c4956a;
+}
+.timeline-item {
+  margin-bottom: 2rem;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  background: #c4956a;
+  border-radius: 50%;
+}
+
+/* RSVP modal */
+#rsvp-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+#rsvp-modal .modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+}
+#rsvp-modal.show {
+  display: flex;
+}
+
