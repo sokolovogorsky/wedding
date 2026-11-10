@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Свадьба Дины & Дениса — 27 мая 2027</title>
     <meta name="description" content="Приглашение на свадьбу Дины и Дениса. 27 мая 2027, Резиденция «Мария», г. Энгельс">
     <meta property="og:title" content="Дина & Денис — 27.05.2027">
@@ -131,10 +131,7 @@
         nav.scrolled a {
             color: var(--text-secondary);
         }
-        nav a:hover {
-            color: var(--text-primary);
-        }
-        nav.scrolled a:hover {
+        nav a:hover, nav.scrolled a:hover {
             color: var(--text-primary);
         }
         nav a::after {
@@ -154,6 +151,7 @@
         .hero {
             position: relative;
             min-height: 100vh;
+            min-height: 100dvh; /* For iOS Safari */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -161,9 +159,8 @@
             text-align: center;
             padding: 2rem;
             overflow: hidden;
-            /* Background image — replace with your own photo */
             background: url('image/IMG_2571.jpg') center 20% / cover no-repeat;
-            background-color: #C8C0B6; /* fallback if no image */
+            background-color: #C8C0B6;
         }
         .hero-overlay {
             position: absolute;
@@ -272,9 +269,6 @@
             position: relative;
             padding: 120px 20px;
         }
-        .section-alt {
-            background: var(--alabaster);
-        }
 
         .section-header {
             text-align: center;
@@ -304,7 +298,7 @@
             margin: 1.5rem auto 0;
         }
 
-        /* ===== STORY — new layout ===== */
+        /* ===== STORY ===== */
         .story-section { background: var(--white); }
 
         .story-container {
@@ -312,17 +306,15 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 4rem;
+            gap: 4.5rem;
         }
 
-        /* Centered text-only blocks */
         .story-block-center {
             text-align: center;
             max-width: 520px;
             margin: 0 auto;
         }
 
-        /* Side-by-side blocks */
         .story-block-side {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -388,16 +380,9 @@
             .story-block-side .story-photo-wrap {
                 order: -1;
             }
-            .story-container { gap: 3rem; }
+            .story-container { gap: 3.5rem; }
         }
 
-        /* ===== COUNTDOWN ===== */
-        .countdown-section {
-            background: var(--white);
-            text-align: center;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
         /* ===== INFO MOSAIC ===== */
         .info-mosaic-section {
             background: var(--alabaster);
@@ -407,18 +392,11 @@
             max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 3fr 2fr;
-            grid-template-rows: auto;
+            grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
-        /* Bento layout assignments */
         .mosaic-card.bento-countdown  { grid-column: 1 / -1; }
-        .mosaic-card.bento-program    { grid-column: 1 / 2; }
-        .mosaic-card.bento-venue      { grid-column: 2 / 3; }
-        .mosaic-card.bento-transfer   { grid-column: 1 / -1; }
-        .mosaic-card.bento-dresscode  { grid-column: 1 / 2; }
-        .mosaic-card.bento-gifts      { grid-column: 2 / 3; }
-
+        
         .mosaic-card {
             background: var(--white);
             border: 1px solid var(--border);
@@ -429,13 +407,8 @@
             flex-direction: column;
         }
         .mosaic-card.full-width {
-            grid-column: 1 / -1;
             align-items: center;
             text-align: center;
-        }
-        .mosaic-card.center-text {
-            text-align: center;
-            align-items: center;
         }
         .mosaic-title {
             font-family: 'Cormorant Garamond', serif;
@@ -444,13 +417,7 @@
             margin-bottom: 2rem;
             text-align: center;
         }
-        .mosaic-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
         
-        /* Map adjustments */
         .mosaic-map {
             width: 100%;
             height: 220px;
@@ -458,13 +425,13 @@
             overflow: hidden;
             margin-top: 1.5rem;
             border: 1px solid var(--border);
+            flex-grow: 1;
         }
         .mosaic-map iframe {
             width: 100%; height: 100%; border: 0;
             filter: grayscale(60%) contrast(1.05);
         }
 
-        /* Micro-components inside Mosaic */
         .countdown-grid {
             display: flex;
             justify-content: center;
@@ -496,6 +463,13 @@
             margin-top: 0.5rem;
             display: block;
         }
+        
+        .program-grid {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
         .program-item {
             display: grid;
             grid-template-columns: 60px 1fr;
@@ -521,17 +495,6 @@
             color: var(--text-tertiary);
             margin-top: 0.2rem;
         }
-        .dresscode-palette {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .color-swatch {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-        }
         .venue-name {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.6rem;
@@ -547,61 +510,8 @@
         
         @media (max-width: 768px) {
             .info-mosaic-grid { grid-template-columns: 1fr; }
-            .mosaic-card.bento-countdown,
-            .mosaic-card.bento-program,
-            .mosaic-card.bento-venue,
-            .mosaic-card.bento-transfer,
-            .mosaic-card.bento-dresscode,
-            .mosaic-card.bento-gifts { grid-column: 1 / -1; }
             .mosaic-card { padding: 2rem 1.5rem; }
-        }
-
-        /* ===== Q&A ===== */
-        .qna-section {
-            background: var(--white);
-            border-top: 1px solid var(--border);
-        }
-        .qna-grid {
-            max-width: 860px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-        .qna-card {
-            background: var(--alabaster);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-        }
-        .qna-icon {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        .qna-question {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
-            font-weight: 400;
-            color: var(--text-primary);
-            margin-bottom: 0.8rem;
-        }
-        .qna-answer {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        .qna-answer a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid var(--accent-warm);
-            transition: border-color var(--transition);
-        }
-        .qna-answer a:hover {
-            border-color: var(--accent);
-        }
-        @media (max-width: 768px) {
-            .qna-grid { grid-template-columns: 1fr; }
-            .qna-card { padding: 2rem 1.5rem; }
+            .mosaic-card.bento-program, .mosaic-card.bento-venue { grid-column: 1 / -1; }
         }
 
         /* ===== RSVP ===== */
@@ -638,10 +548,12 @@
             border-bottom: 1px solid var(--border);
             color: var(--text-primary);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 16px; /* 16px prevents iOS auto-zoom */
             font-weight: 400;
             transition: all var(--transition);
             outline: none;
+            border-radius: 0;
+            -webkit-appearance: none;
         }
         .form-group input:focus,
         .form-group textarea:focus {
@@ -676,11 +588,12 @@
             border: 1px solid var(--border);
             cursor: pointer;
             transition: all var(--transition);
-            font-size: 0.85rem !important;
+            font-size: 16px !important;
             letter-spacing: 1px !important;
             text-transform: none !important;
             color: var(--text-secondary) !important;
             font-family: 'Cormorant Garamond', serif !important;
+            -webkit-tap-highlight-color: transparent;
         }
         .attendance-option input:checked + label {
             border-color: var(--charcoal);
@@ -705,6 +618,8 @@
             transition: all var(--transition);
             align-self: center;
             margin-top: 1rem;
+            -webkit-appearance: none;
+            border-radius: 0;
         }
         .rsvp-submit:hover {
             background: transparent;
@@ -777,6 +692,8 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all var(--transition);
+            -webkit-appearance: none;
+            border-radius: 0;
         }
         .modal-close:hover {
             background: var(--charcoal);
@@ -787,6 +704,7 @@
         .footer-section {
             position: relative;
             height: 100vh;
+            height: 100dvh;
             min-height: 700px;
             background-image: url('image/IMG_5829.jpg');
             background-attachment: fixed;
@@ -800,6 +718,11 @@
             text-align: center;
             padding-top: 25vh;
         }
+        /* Mobile background fix for iOS */
+        @supports (-webkit-touch-callout: none) {
+            .footer-section { background-attachment: scroll; }
+        }
+        
         .footer-overlay {
             position: absolute;
             inset: 0;
@@ -916,7 +839,7 @@
             transform: translateY(0);
         }
 
-        /* ===== FALLING PETALS (very subtle) ===== */
+        /* ===== FALLING PETALS ===== */
         .petal {
             position: fixed;
             pointer-events: none;
@@ -930,44 +853,7 @@
             100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(60px); }
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            section { padding: 80px 20px; }
-
-            .hero-names { font-size: clamp(2.5rem, 10vw, 4rem); }
-
-            .nav-inner { gap: 1.5rem; }
-            nav a { font-size: 9px; letter-spacing: 2px; }
-
-            .venue-card {
-                grid-template-columns: 1fr;
-            }
-            .venue-map { min-height: 250px; }
-            .venue-info { padding: 2.5rem; }
-
-            .chat-section { padding: 40px 16px 60px; }
-            .chat-card {
-                height: 380px;
-                border-radius: 8px;
-            }
-            .chat-bg-img {
-                object-position: center 75%;
-            }
-            .chat-content {
-                padding: 1.8rem 1.2rem;
-            }
-
-            .attendance-options { flex-direction: column; }
-
-            .countdown-card { width: 80px; padding: 1.2rem 0.5rem; }
-            .countdown-number { font-size: 2rem; }
-
-            .program-item { grid-template-columns: 65px 1fr auto; gap: 1rem; }
-
-            .dresscode-palette { gap: 0.8rem; }
-            .color-swatch { width: 40px; height: 40px; }
-        }
-
+        /* ===== RESPONSIVE TWEAKS ===== */
         @media (max-width: 480px) {
             section { padding: 60px 16px; }
             nav { padding: 1.2rem 1rem; }
@@ -994,37 +880,9 @@
             90% { transform: translate(-1%, 7%); }
         }
 
-
-
-        /* Remove static transform for reveal since GSAP takes over */
         .reveal, .program-item {
             visibility: hidden;
         }
-
-        /* ===== MASCOT SECTION ===== */
-        .mascot-section { background: var(--white); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 20px 80px; overflow: hidden; position: relative; }
-        .mascot-wrap { position: relative; width: 420px; height: 220px; cursor: pointer; user-select: none; margin-bottom: 2rem; }
-        .wedding-altar { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 250px; height: auto; z-index: 1; }
-        .otter-left { position: absolute; bottom: 10px; left: 30px; width: 155px; height: auto; transform-origin: bottom right; animation: otterLeftIdle 3s ease-in-out infinite alternate; z-index: 3; }
-        .otter-right { position: absolute; bottom: 10px; right: 45px; width: 130px; height: auto; transform-origin: bottom left; animation: otterRightIdle 3s ease-in-out infinite alternate; z-index: 3; }
-        .mascot-heart { position: absolute; font-size: 1.5rem; opacity: 0; pointer-events: none; z-index: 2; }
-        .heart-1 { left: 45%; top: 30%; animation: heartFloat 4s ease-in-out infinite 0.5s; color: var(--accent); }
-        .heart-2 { left: 52%; top: 20%; animation: heartFloat 3.5s ease-in-out infinite 1.5s; color: var(--accent-warm); }
-        .heart-3 { left: 42%; top: 40%; animation: heartFloat 4.2s ease-in-out infinite 2s; color: var(--accent); }
-        .mascot-labels { position: absolute; top: -10px; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-        .m-label { position: absolute; display: flex; align-items: center; gap: 6px; }
-        .m-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--text-primary); font-style: italic; }
-        .label-denis { left: 10px; top: 30px; }
-        .label-dina { right: 10px; top: 30px; }
-        .mascot-caption { font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-tertiary); text-align: center; opacity: 0.8; margin-top: 1rem; }
-        .mascot-wrap:hover .otter-left { animation: otterLeftHug 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate; }
-        .mascot-wrap:hover .otter-right { animation: otterRightHug 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate; }
-        @keyframes otterLeftIdle { 0% { transform: translateX(0) rotate(0deg); } 100% { transform: translateX(4px) rotate(2deg); } }
-        @keyframes otterRightIdle { 0% { transform: translateX(0) rotate(0deg); } 100% { transform: translateX(-4px) rotate(-2deg); } }
-        @keyframes otterLeftHug { 0% { transform: translateX(0) rotate(0deg) scale(1); } 100% { transform: translateX(35px) rotate(6deg) scale(1.02); } }
-        @keyframes otterRightHug { 0% { transform: translateX(0) rotate(0deg) scale(1); } 100% { transform: translateX(-35px) rotate(-6deg) scale(1.02); } }
-        @keyframes heartFloat { 0% { transform: translateY(20px) scale(0.5); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-60px) scale(1.2); opacity: 0; } }
-        @media (max-width: 480px) { .mascot-wrap { width: 100%; height: 180px; } .otter-left { left: 5%; width: 135px; } .otter-right { right: 5%; width: 115px; } .label-denis { left: 0px; top: 10px; } .label-dina { right: 0px; top: 10px; } .m-name { font-size: 1.2rem; } }
     </style>
 </head>
 <body>
@@ -1053,13 +911,10 @@
 
         <div class="hero-content">
             <p class="hero-invite">Мы приглашаем вас на нашу свадьбу</p>
-
             <h1 class="hero-names">Дина <span class="amp">&</span> Денис</h1>
-
             <div class="hero-line"></div>
-
             <p class="hero-date">27 мая 2027</p>
-            <p class="hero-venue">Тритония · Саратов</p>
+            <p class="hero-venue">Резиденция Мария · Энгельс</p>
         </div>
 
         <div class="hero-scroll">
@@ -1077,17 +932,17 @@
         </div>
 
         <div class="story-container">
-            <!-- 1. Первая встреча — центр, без фото -->
+            <!-- 1. Первая встреча -->
             <div class="story-block-center reveal">
                 <div class="story-year">Март 2022</div>
                 <div class="story-title">Первая встреча</div>
                 <div class="story-desc">Наша история началась прямо на рабочем месте — тогда мы ещё не знали, что эта встреча изменит всё.</div>
             </div>
 
-            <!-- 2. Первое свидание — фото справа, текст слева -->
+            <!-- 2. Первое свидание -->
             <div class="story-block-side reveal">
                 <div class="story-text">
-                    <div class="story-year">26 апреля</div>
+                    <div class="story-year">26 апреля 2022 года</div>
                     <div class="story-title">Первое свидание</div>
                     <div class="story-desc">Бесконечные разговоры, улыбки и, конечно же, стаканчик любимого кофе из Surf Coffee. С этого дня мы не расставались.</div>
                 </div>
@@ -1096,23 +951,28 @@
                 </div>
             </div>
 
-            <!-- 3. Предложение — фото слева, текст справа -->
+            <!-- 3. Предложение (с велосипедом) -->
             <div class="story-block-side reverse reveal">
                 <div class="story-text">
-                    <div class="story-year">27 апреля</div>
+                    <div class="story-year">27 апреля 2026 года</div>
                     <div class="story-title">Предложение в Кисловодске</div>
                     <div class="story-desc">Среди живописных пейзажей Кисловодска прозвучал самый волнительный вопрос и самое счастливое «Да!».</div>
                 </div>
                 <div class="story-photo-wrap">
-                    <img src="image/ring.jpg" alt="Заветное «Да!»" class="story-photo" loading="lazy">
+                    <img src="image/photo_2026-11-09_11-37-32.jpg" alt="Предложение в Кисловодске" class="story-photo" loading="lazy">
                 </div>
             </div>
 
-            <!-- 4. День свадьбы — центр, без фото -->
-            <div class="story-block-center reveal">
-                <div class="story-year">27 мая 2027</div>
-                <div class="story-title">День нашей свадьбы</div>
-                <div class="story-desc">День, когда мы соединяем наши судьбы и начинаем новую главу — и мы безмерно рады разделить его с вами.</div>
+            <!-- 4. День свадьбы (текст слева, фото справа) -->
+            <div class="story-block-side reveal">
+                <div class="story-text">
+                    <div class="story-year">27 мая 2027</div>
+                    <div class="story-title">День нашей свадьбы</div>
+                    <div class="story-desc">День, когда мы соединяем наши судьбы и начинаем новую главу — и мы безмерно рады разделить его с вами.</div>
+                </div>
+                <div class="story-photo-wrap">
+                    <img src="image/photo_2026-11-09_11-29-20.jpg" alt="Заветное «Да!»" class="story-photo" loading="lazy">
+                </div>
             </div>
         </div>
     </section>
@@ -1147,7 +1007,7 @@
             <!-- Program -->
             <div class="mosaic-card bento-program reveal">
                 <h2 class="mosaic-title">Программа дня</h2>
-                <div class="program-grid" style="max-width: 100%; margin:0;">
+                <div class="program-grid">
                     <div class="program-item">
                         <div class="program-time">15:00</div>
                         <div>
@@ -1173,7 +1033,7 @@
                         <div class="program-time">19:30</div>
                         <div>
                             <div class="program-title">Вечеринка</div>
-                            <div class="program-desc">Танцы и веселье до утра</div>
+                            <div class="program-desc">Танцы и веселье</div>
                         </div>
                     </div>
                 </div>
@@ -1183,160 +1043,16 @@
             <div class="mosaic-card bento-venue reveal">
                 <h2 class="mosaic-title">Место проведения</h2>
                 <div class="venue-info" style="padding:0; text-align:center; box-shadow:none; border:none; background:transparent;">
-                    <h3 class="venue-name" style="font-size: 1.5rem;">Тритония</h3>
-                    <p class="venue-address">Саратов, с. Усть-Курдюм</p>
+                    <h3 class="venue-name" style="font-size: 1.5rem;">Резиденция Мария</h3>
+                    <p class="venue-address">Энгельс, Саратовская область</p>
                 </div>
                 <!-- Yandex Map -->
                 <div class="mosaic-map">
-                    <iframe src="https://yandex.ru/map-widget/v1/?text=Тритония%20Саратов%20Усть-Курдюм" allowfullscreen="true"></iframe>
+                    <iframe src="https://yandex.ru/map-widget/v1/?text=Резиденция%20Мария%20Энгельс%20Саратовская%20область" allowfullscreen="true"></iframe>
                 </div>
-            </div>
-
-            <!-- Transfer -->
-            <div class="mosaic-card bento-transfer reveal" style="grid-column: 1 / -1;">
-                <h2 class="mosaic-title">Трансфер</h2>
-                <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-                    <div style="text-align: center; flex: 1; min-width: 200px;">
-                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-primary); line-height:1;">14:00</div>
-                        <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-tertiary); margin: 0.5rem 0 0.8rem;">отправление</div>
-                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-primary);">Сенной рынок → Усадьба</div>
-                        <div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.3rem;">~40 мин в пути</div>
-                    </div>
-                    <div style="width: 1px; background: var(--border); align-self: stretch;"></div>
-                    <div style="text-align: center; flex: 1; min-width: 200px;">
-                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-primary); line-height:1;">23:00</div>
-                        <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-tertiary); margin: 0.5rem 0 0.8rem;">обратно</div>
-                        <div style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--text-primary);">Усадьба → Сенной рынок</div>
-                        <div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.3rem;">~40 мин в пути</div>
-                    </div>
-                </div>
-                <p style="text-align: center; font-size: 0.82rem; color: var(--text-tertiary); margin-top: 2rem;">
-                    Место сбора: <span style="color: var(--text-secondary);">Саратов, Сенной рынок</span>
-                </p>
-            </div>
-
-            <!-- Dresscode -->
-            <div class="mosaic-card bento-dresscode center-text reveal">
-                <h2 class="mosaic-title">Пожелания по стилю</h2>
-                <p>Мы не придерживаемся строгого дресс-кода, но будем рады, если ваш образ будет гармонировать с тёплой палитрой нашей свадьбы.</p>
-                <p style="margin-top: 0.8rem;">Нам близки оттенки: <em>терракотовый, персиковый, кремовый, винный, приглушённый зелёный</em>.</p>
-                <div class="dresscode-palette" style="margin-top: 1.5rem; justify-content: center;">
-                    <div class="color-swatch" style="background: #B95C46;" title="Терракотовый"></div>
-                    <div class="color-swatch" style="background: #E29C7F;" title="Персиковый"></div>
-                    <div class="color-swatch" style="background: #F4EFE6;" title="Кремовый"></div>
-                    <div class="color-swatch" style="background: #798965;" title="Приглушённый зелёный"></div>
-                    <div class="color-swatch" style="background: #8B3A36;" title="Винный"></div>
-                </div>
-            </div>
-
-            <!-- Gifts -->
-            <div class="mosaic-card bento-gifts center-text reveal">
-                <h2 class="mosaic-title">О подарках</h2>
-                <p>Мы будем рады разделить этот день с вами! Пожалуйста, не дарите нам живые цветы — они быстро завянут, а нам будет сложно забрать их после праздника.</p>
-                <p>Вместо этого мы будем очень рады бутылочке вашего любимого вина. Как-нибудь вечером мы откроем её на дегустации под чтение стихов и с теплом вспомним нашу свадьбу.</p>
             </div>
 
         </div>
-    </section>
-
-    <!-- Mascot Section -->
-    <section class="mascot-section reveal">
-        <div class="mascot-wrap" id="mascot">
-            <svg class="wedding-altar" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <line x1="20" y1="190" x2="100" y2="30" stroke="#8E6A50" stroke-width="5" stroke-linecap="round"/>
-                <line x1="180" y1="190" x2="100" y2="30" stroke="#8E6A50" stroke-width="5" stroke-linecap="round"/>
-                <path d="M 60 110 Q 100 30 140 110 Q 150 140 160 190" fill="none" stroke="#F4EFE6" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
-                <path d="M 100 30 Q 80 10 70 25 Q 90 40 100 30" fill="#798965"/>
-                <path d="M 100 30 Q 120 10 130 25 Q 110 40 100 30" fill="#798965"/>
-                <path d="M 100 30 Q 80 40 60 50 Q 80 60 100 30" fill="#798965"/>
-                <path d="M 100 30 Q 120 40 140 50 Q 120 60 100 30" fill="#798965"/>
-                <circle cx="100" cy="30" r="14" fill="#B95C46" />
-                <circle cx="85" cy="45" r="11" fill="#E29C7F" />
-                <circle cx="115" cy="45" r="11" fill="#E29C7F" />
-                <circle cx="75" cy="65" r="9" fill="#8B3A36" />
-                <circle cx="125" cy="65" r="9" fill="#F4EFE6" />
-            </svg>
-
-            <div class="mascot-heart heart-1">❤️</div>
-            <div class="mascot-heart heart-2">💖</div>
-            <div class="mascot-heart heart-3">❤️</div>
-
-            <div class="mascot-labels">
-                <div class="m-label label-denis">
-                    <span class="m-name">Денис</span>
-                    <svg width="24" height="28" viewBox="0 0 24 28">
-                        <path d="M 4 8 Q 12 8 20 22" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round"/>
-                        <polyline points="14,20 20,22 22,16" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <div class="m-label label-dina">
-                    <svg width="24" height="28" viewBox="0 0 24 28">
-                        <path d="M 20 8 Q 12 8 4 22" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round"/>
-                        <polyline points="10,20 4,22 2,16" fill="none" stroke="#9E9690" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="m-name">Дина</span>
-                </div>
-            </div>
-
-            <svg class="otter-left" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 40 90 Q 0 115 5 120 Q 25 120 50 95" fill="#7D5C43" />
-                <ellipse cx="48" cy="75" rx="22" ry="35" fill="#7D5C43" />
-                <ellipse cx="48" cy="80" rx="24" ry="34" fill="#2C2624" />
-                <path d="M 38 52 L 48 85 L 58 52 Z" fill="#FFFFFF" />
-                <path d="M 40 60 L 48 64 L 40 68 Z M 56 60 L 48 64 L 56 68 Z" fill="#B95C46" />
-                <circle cx="48" cy="64" r="3" fill="#B95C46" />
-                <ellipse cx="32" cy="112" rx="12" ry="5" fill="#5A3F2A" />
-                <path d="M 28 110 L 26 115 M 32 110 L 32 115 M 36 110 L 38 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
-                <ellipse cx="62" cy="112" rx="12" ry="5" fill="#5A3F2A" />
-                <path d="M 58 110 L 56 115 M 62 110 L 62 115 M 66 110 L 68 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
-                <ellipse cx="50" cy="35" rx="26" ry="22" fill="#7D5C43" />
-                <ellipse cx="25" cy="28" rx="4" ry="6" fill="#7D5C43" transform="rotate(-20 25 28)" />
-                <ellipse cx="75" cy="28" rx="4" ry="6" fill="#7D5C43" transform="rotate(20 75 28)" />
-                <ellipse cx="50" cy="42" rx="16" ry="10" fill="#D3A27F" />
-                <ellipse cx="50" cy="37" rx="5" ry="3.5" fill="#2C2624" />
-                <path d="M 50 40.5 L 50 44 M 45 46 Q 50 49 55 46" stroke="#2C2624" stroke-width="1.5" fill="none" />
-                <path d="M 33 40 L 15 37 M 33 43 L 14 43 M 34 46 L 16 49" stroke="#5A3F2A" stroke-width="1.2" stroke-linecap="round" />
-                <path d="M 67 40 L 85 37 M 67 43 L 86 43 M 66 46 L 84 49" stroke="#5A3F2A" stroke-width="1.2" stroke-linecap="round" />
-                <circle cx="38" cy="30" r="2.5" fill="#2C2624" />
-                <circle cx="62" cy="30" r="2.5" fill="#2C2624" />
-                <ellipse cx="36" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.8" />
-                <ellipse cx="64" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.8" />
-                <path d="M 62 65 Q 85 68 73 80" stroke="#2C2624" stroke-width="11" stroke-linecap="round" fill="none" />
-                <ellipse cx="74" cy="80" rx="5" ry="4" fill="#7D5C43" />
-            </svg>
-
-            <svg class="otter-right" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 60 90 Q 100 115 95 120 Q 75 120 50 95" fill="#8E6A50" />
-                <path d="M 50 15 C 80 15, 90 50, 85 90 C 70 95, 30 95, 15 90 C 10 50, 20 15, 50 15 Z" fill="#FFFFFF" opacity="0.55" />
-                <ellipse cx="52" cy="75" rx="22" ry="35" fill="#8E6A50" />
-                <path d="M 32 75 Q 54 60 76 75 L 82 105 Q 54 115 26 105 Z" fill="#FFFFFF" />
-                <path d="M 42 62 Q 50 68 58 62" stroke="#E8E3DD" stroke-width="2" fill="none" stroke-linecap="round" />
-                <circle cx="50" cy="65" r="2" fill="#E8E3DD" />
-                <path d="M 45 80 Q 50 100 50 105 M 60 85 Q 65 100 65 102" stroke="#F0EEEB" stroke-width="2" fill="none" stroke-linecap="round" />
-                <ellipse cx="38" cy="112" rx="12" ry="5" fill="#6B4B36" />
-                <path d="M 34 110 L 32 115 M 38 110 L 38 115 M 42 110 L 44 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
-                <ellipse cx="68" cy="112" rx="12" ry="5" fill="#6B4B36" />
-                <path d="M 64 110 L 62 115 M 68 110 L 68 115 M 72 110 L 74 115" stroke="#2C2624" stroke-width="1.5" stroke-linecap="round" />
-                <ellipse cx="50" cy="35" rx="26" ry="22" fill="#8E6A50" />
-                <circle cx="38" cy="18" r="4.5" fill="#E29C7F" />
-                <circle cx="48" cy="15" r="5" fill="#B95C46" />
-                <circle cx="58" cy="17" r="4" fill="#E29C7F" />
-                <ellipse cx="25" cy="28" rx="4" ry="6" fill="#8E6A50" transform="rotate(-20 25 28)" />
-                <ellipse cx="75" cy="28" rx="4" ry="6" fill="#8E6A50" transform="rotate(20 75 28)" />
-                <ellipse cx="50" cy="42" rx="16" ry="10" fill="#E5C2A4" />
-                <ellipse cx="50" cy="37" rx="5" ry="3.5" fill="#2C2624" />
-                <path d="M 50 40.5 L 50 44 M 45 46 Q 50 49 55 46" stroke="#2C2624" stroke-width="1.5" fill="none" />
-                <path d="M 33 40 L 15 37 M 33 43 L 14 43 M 34 46 L 16 49" stroke="#6B4B36" stroke-width="1.2" stroke-linecap="round" />
-                <path d="M 67 40 L 85 37 M 67 43 L 86 43 M 66 46 L 84 49" stroke="#6B4B36" stroke-width="1.2" stroke-linecap="round" />
-                <path d="M 34 30 Q 38 26 42 30" stroke="#2C2624" stroke-width="2" fill="none" stroke-linecap="round" />
-                <path d="M 58 30 Q 62 26 66 30" stroke="#2C2624" stroke-width="2" fill="none" stroke-linecap="round" />
-                <ellipse cx="36" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.9" />
-                <ellipse cx="64" cy="43" rx="4" ry="2" fill="#E29C7F" opacity="0.9" />
-                <path d="M 35 65 Q 15 68 25 80" stroke="#8E6A50" stroke-width="9" stroke-linecap="round" fill="none" />
-            </svg>
-        </div>
-
-        <div class="mascot-caption reveal">Денис, Дина и их день <br> 27 мая 2027</div>
     </section>
 
     <!-- RSVP Section -->
@@ -1407,7 +1123,7 @@
             <p class="chat-label">Будьте на связи</p>
             <h3 class="chat-title">Присоединяйтесь к нашему свадебному чату</h3>
             <p class="chat-desc">Здесь мы будем делиться всеми важными новостями, таймингом и фотографиями</p>
-            <a href="https://t.me" target="_blank" class="chat-link magnetic">
+            <a href="https://t.me/+uA4WprUaBc44ZDAy" target="_blank" class="chat-link magnetic">
                 Вступить в Telegram-чат <span class="arrow">⟶</span>
             </a>
         </div>
@@ -1450,7 +1166,6 @@
     // ========== GSAP ANIMATIONS ==========
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Reveal elements gracefully
     gsap.utils.toArray('.reveal, .program-item').forEach(el => {
         gsap.fromTo(el, 
             { autoAlpha: 0, y: 30 },
@@ -1464,35 +1179,36 @@
         );
     });
 
-    // 2. Vertical Parallax for all images (Hero, Story, Chat)
-    // Hero uses background-position
-    gsap.to(".hero", {
-        backgroundPosition: "50% 80%",
-        ease: "none",
-        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-    });
-    
-    // Story photo uses object-position
-    gsap.to(".story-photo", {
-        objectPosition: "50% 80%",
-        ease: "none",
-        scrollTrigger: { trigger: ".story-photo-wrap", start: "top bottom", end: "bottom top", scrub: true }
-    });
-
-    // Footer: CSS parallax via background-attachment:fixed — no GSAP needed
+    // Only apply parallax if not on a touch device to avoid iOS jitter
+    if (!('ontouchstart' in window)) {
+        gsap.to(".hero", {
+            backgroundPosition: "50% 80%",
+            ease: "none",
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+        });
+        
+        gsap.to(".story-photo", {
+            objectPosition: "50% 80%",
+            ease: "none",
+            scrollTrigger: { trigger: ".story-photo-wrap", start: "top bottom", end: "bottom top", scrub: true }
+        });
+    }
 
     // ========== MAGNETIC BUTTONS ==========
-    document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', e => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+    // Disabled on mobile for better UX
+    if (!('ontouchstart' in window)) {
+        document.querySelectorAll('.magnetic').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+            });
         });
-        btn.addEventListener('mouseleave', () => {
-            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-        });
-    });
+    }
 
     // ========== COUNTDOWN ==========
     const weddingDate = new Date('2027-05-27T16:00:00+03:00');
@@ -1528,10 +1244,6 @@
     setInterval(createPetal, 6000);
 
     // ========== TELEGRAM CONFIG ==========
-    // ⚠️  ВНИМАНИЕ: токен бота хранится в открытом виде в клиентском коде.
-    // Любой, кто откроет исходник страницы, сможет его прочитать.
-    // Для продакшена рекомендуется вынести отправку на сервер (Google Apps Script,
-    // Cloudflare Worker, Formspree и т.д.) и не хранить токен во фронтенде.
     const TELEGRAM_BOT_TOKEN = '8628753070:AAF6vBOa8hhQZpjnJqP6gmM1kUkW-K21JuI';
     const TELEGRAM_CHAT_ID = '-5533327993';
 
