@@ -44,7 +44,7 @@
 
         ::selection {
             background: var(--accent);
-            color: var(--charcoal);
+            color: var(--white);
         }
 
         img { max-width: 100%; display: block; }
@@ -59,7 +59,7 @@
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            transition: opacity 1s ease, visibility 1s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         .loading-screen.hidden {
             opacity: 0;
@@ -109,6 +109,7 @@
         nav.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 1rem 3rem;
             border-bottom: 1px solid var(--border-light);
         }
@@ -147,11 +148,11 @@
             right: 0;
         }
 
-        /* ===== HERO SECTION ===== */
-        .hero {
+        /* ===== HERO & FOOTER SHARED PARALLAX SYSTEM ===== */
+        .hero, .footer-section {
             position: relative;
             min-height: 100vh;
-            min-height: 100dvh; /* For iOS Safari */
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -159,18 +160,47 @@
             text-align: center;
             padding: 2rem;
             overflow: hidden;
-            background: url('image/IMG_2571.jpg') center 20% / cover no-repeat;
-            background-color: #C8C0B6;
+            background-color: #2C2624;
+        }
+        
+        /* ГИГАНТСКИЙ буфер -30%, чтобы никаких квадратов и обрывов на iOS не было */
+        .parallax-bg {
+            position: absolute;
+            top: -30%;
+            left: -5%;
+            right: -5%;
+            bottom: -30%;
+            background-position: center 25%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 1;
+            will-change: transform;
+        }
+        .hero-bg-img {
+            background-image: url('image/IMG_2571.jpg');
+        }
+        .footer-bg-img {
+            background-image: url('image/IMG_5829.jpg');
+            background-position: center center;
         }
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+        .footer-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.48);
+            z-index: 2;
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 3;
+            /* Сдвигаем текст в небо на десктопе */
+            transform: translateY(-10vh);
         }
 
         .hero-invite {
@@ -179,7 +209,7 @@
             font-weight: 300;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             margin-bottom: 2.5rem;
             opacity: 0;
             animation: fadeUp 1s ease 0.4s forwards;
@@ -218,17 +248,17 @@
             font-weight: 300;
             letter-spacing: 6px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.85);
+            color: rgba(255,255,255,0.9);
             opacity: 0;
             animation: fadeUp 1s ease 1.3s forwards;
         }
 
         .hero-venue {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: 300;
             font-style: italic;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.75);
             margin-top: 0.6rem;
             opacity: 0;
             animation: fadeUp 1s ease 1.5s forwards;
@@ -236,7 +266,7 @@
 
         .hero-scroll {
             position: absolute;
-            bottom: 3rem;
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -245,18 +275,19 @@
             gap: 0.8rem;
             opacity: 0;
             animation: fadeUp 1s ease 2s forwards;
+            z-index: 3;
         }
         .hero-scroll-text {
             font-size: 9px;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6);
             writing-mode: vertical-rl;
         }
         .hero-scroll-line {
             width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+            height: 45px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
             animation: scrollPulse 2.5s ease infinite;
         }
         @keyframes scrollPulse {
@@ -267,12 +298,11 @@
         /* ===== SECTION SYSTEM ===== */
         section {
             position: relative;
-            padding: 120px 20px;
+            padding: 110px 20px;
         }
-
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 4.5rem;
         }
         .section-label {
             display: block;
@@ -282,11 +312,11 @@
             letter-spacing: 5px;
             text-transform: uppercase;
             color: var(--text-tertiary);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
         .section-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
             font-weight: 300;
             color: var(--text-primary);
             letter-spacing: 2px;
@@ -298,7 +328,7 @@
             margin: 1.5rem auto 0;
         }
 
-        /* ===== STORY ===== */
+        /* ===== STORY (UNIFIED PHOTO CARDS) ===== */
         .story-section { background: var(--white); }
 
         .story-container {
@@ -318,33 +348,38 @@
         .story-block-side {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 3.5rem;
             align-items: center;
         }
         .story-block-side.reverse {
             direction: rtl;
         }
-        .story-block-side.reverse .story-text {
-            direction: ltr;
-        }
-        .story-block-side .story-photo-wrap {
+        .story-block-side.reverse .story-text,
+        .story-block-side.reverse .story-photo-wrap {
             direction: ltr;
         }
 
+        /* Единый стиль всех трех карточек с фото в Истории */
         .story-photo-wrap {
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.07);
             border: 1px solid var(--border-light);
+            background: var(--alabaster);
+            height: 360px;
+            width: 100%;
         }
         .story-photo {
             width: 100%;
-            height: 340px;
+            height: 100%;
             object-fit: cover;
+            object-position: center 30%;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .story-photo:hover { transform: scale(1.04); }
+        .story-photo-wrap:hover .story-photo {
+            transform: scale(1.04);
+        }
 
         .story-year {
             font-family: 'Montserrat', sans-serif;
@@ -357,52 +392,38 @@
         }
         .story-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
+            font-size: 1.65rem;
             font-weight: 400;
             color: var(--text-primary);
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.7rem;
+            line-height: 1.25;
         }
         .story-desc {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        @media (max-width: 768px) {
-            .story-block-side {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                direction: ltr !important;
-            }
-            .story-block-side.reverse .story-text {
-                direction: ltr;
-            }
-            .story-block-side .story-photo-wrap {
-                order: -1;
-            }
-            .story-container { gap: 3.5rem; }
+            line-height: 1.75;
         }
 
         /* ===== INFO MOSAIC ===== */
         .info-mosaic-section {
             background: var(--alabaster);
-            padding: 6rem 2rem;
+            padding: 6rem 20px;
         }
         .info-mosaic-grid {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
-        .mosaic-card.bento-countdown  { grid-column: 1 / -1; }
+        .mosaic-card.bento-countdown { grid-column: 1 / -1; }
         
         .mosaic-card {
             background: var(--white);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 3rem 2.5rem;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
         }
@@ -412,7 +433,8 @@
         }
         .mosaic-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
+            font-size: 2.1rem;
+            font-weight: 400;
             color: var(--text-primary);
             margin-bottom: 2rem;
             text-align: center;
@@ -420,29 +442,30 @@
         
         .mosaic-map {
             width: 100%;
-            height: 220px;
-            border-radius: 8px;
+            height: 240px;
+            border-radius: 10px;
             overflow: hidden;
-            margin-top: 1.5rem;
+            margin-top: 1.2rem;
             border: 1px solid var(--border);
             flex-grow: 1;
         }
         .mosaic-map iframe {
-            width: 100%; height: 100%; border: 0;
-            filter: grayscale(60%) contrast(1.05);
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(40%) contrast(1.02);
         }
 
         .countdown-grid {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
+            gap: 1.2rem;
         }
         .countdown-card {
             width: 90px;
-            padding: 1.5rem 0.5rem;
+            padding: 1.4rem 0.5rem;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             background: var(--alabaster);
             text-align: center;
         }
@@ -468,26 +491,27 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
+            flex-grow: 1;
         }
         .program-item {
             display: grid;
             grid-template-columns: 60px 1fr;
             gap: 1rem;
             align-items: baseline;
-            padding: 1.2rem 0;
+            padding: 1.1rem 0;
             border-bottom: 1px solid var(--border);
             text-align: left;
         }
-        .program-item:last-child { border-bottom: none; }
+        .program-item:first-child { padding-top: 0; }
+        .program-item:last-child { border-bottom: none; padding-bottom: 0; }
         .program-time {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: var(--text-primary);
         }
         .program-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-primary);
         }
         .program-desc {
@@ -497,26 +521,19 @@
         }
         .venue-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 400;
             color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
         .venue-address {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        
-        @media (max-width: 768px) {
-            .info-mosaic-grid { grid-template-columns: 1fr; }
-            .mosaic-card { padding: 2rem 1.5rem; }
-            .mosaic-card.bento-program, .mosaic-card.bento-venue { grid-column: 1 / -1; }
         }
 
         /* ===== RSVP ===== */
         .rsvp-section {
-            background: var(--alabaster);
+            background: var(--white);
             border-top: 1px solid var(--border);
         }
         .rsvp-wrapper {
@@ -542,13 +559,13 @@
         .form-group input[type="number"],
         .form-group textarea {
             width: 100%;
-            padding: 1rem 0;
+            padding: 0.9rem 0;
             background: transparent;
             border: none;
             border-bottom: 1px solid var(--border);
             color: var(--text-primary);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 16px; /* 16px prevents iOS auto-zoom */
+            font-size: 16px; /* Защита от авто-зума в Safari на iPhone */
             font-weight: 400;
             transition: all var(--transition);
             outline: none;
@@ -566,9 +583,7 @@
         }
         .form-group textarea {
             resize: vertical;
-            min-height: 80px;
-            border: none;
-            border-bottom: 1px solid var(--border);
+            min-height: 75px;
         }
 
         .attendance-options {
@@ -586,10 +601,11 @@
             padding: 1rem;
             background: transparent;
             border: 1px solid var(--border);
+            border-radius: 6px;
             cursor: pointer;
             transition: all var(--transition);
             font-size: 16px !important;
-            letter-spacing: 1px !important;
+            letter-spacing: 0.5px !important;
             text-transform: none !important;
             color: var(--text-secondary) !important;
             font-family: 'Cormorant Garamond', serif !important;
@@ -598,14 +614,14 @@
         .attendance-option input:checked + label {
             border-color: var(--charcoal);
             color: var(--text-primary) !important;
-            background: var(--white);
+            background: var(--alabaster);
         }
         .attendance-option label:hover {
             border-color: var(--text-tertiary);
         }
 
         .rsvp-submit {
-            padding: 1.1rem 3rem;
+            padding: 1.15rem 3rem;
             background: var(--charcoal);
             color: var(--white);
             border: 1px solid var(--charcoal);
@@ -617,9 +633,9 @@
             cursor: pointer;
             transition: all var(--transition);
             align-self: center;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             -webkit-appearance: none;
-            border-radius: 0;
+            border-radius: 4px;
         }
         .rsvp-submit:hover {
             background: transparent;
@@ -646,13 +662,14 @@
             inset: 0;
             background: rgba(255,255,255,0.92);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 5000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.5s ease;
+            transition: all 0.4s ease;
         }
         .modal-overlay.active {
             opacity: 1;
@@ -662,12 +679,12 @@
             text-align: center;
             max-width: 400px;
             width: 90%;
-            padding: 3rem;
+            padding: 3rem 2rem;
             transform: translateY(15px);
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
         .modal-overlay.active .modal-box { transform: translateY(0); }
-        .modal-emoji { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .modal-emoji { font-size: 2.5rem; margin-bottom: 1.2rem; }
         .modal-title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.8rem;
@@ -692,48 +709,24 @@
             text-transform: uppercase;
             cursor: pointer;
             transition: all var(--transition);
-            -webkit-appearance: none;
-            border-radius: 0;
+            border-radius: 4px;
         }
         .modal-close:hover {
             background: var(--charcoal);
             color: var(--white);
         }
 
-        /* ===== COMBINED FOOTER & CHAT ===== */
+        /* ===== FOOTER CONTENT ===== */
         .footer-section {
-            position: relative;
-            height: 100vh;
-            height: 100dvh;
-            min-height: 700px;
-            background-image: url('image/IMG_5829.jpg');
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: space-between;
-            text-align: center;
-            padding-top: 25vh;
-        }
-        /* Mobile background fix for iOS */
-        @supports (-webkit-touch-callout: none) {
-            .footer-section { background-attachment: scroll; }
-        }
-        
-        .footer-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2;
+            padding-top: 22vh;
+            padding-bottom: 3rem;
         }
         .footer-chat-content {
             position: relative;
             z-index: 3;
             max-width: 600px;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             color: #ffffff;
         }
         .chat-label {
@@ -750,38 +743,39 @@
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 400;
             color: #ffffff;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.8rem;
             line-height: 1.25;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
         .chat-desc {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.88rem;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
+            margin-bottom: 2.2rem;
             line-height: 1.6;
         }
         .chat-link {
             display: inline-flex;
             align-items: center;
             gap: 0.8rem;
-            padding: 1.1rem 2.8rem;
-            background: transparent;
+            padding: 1.1rem 2.6rem;
+            background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             text-decoration: none;
             font-family: 'Montserrat', sans-serif;
             font-size: 10px;
             font-weight: 500;
             letter-spacing: 3px;
             text-transform: uppercase;
-            border-radius: 2px;
+            border-radius: 4px;
             transition: all var(--transition);
         }
         .chat-link:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.18);
             border-color: #ffffff;
             transform: translateY(-2px);
         }
@@ -795,7 +789,6 @@
         .footer-bottom {
             position: relative;
             z-index: 3;
-            padding-bottom: 3rem;
             color: #ffffff;
         }
         .footer-monogram {
@@ -816,7 +809,7 @@
             width: 40px;
             height: 1px;
             background: rgba(255, 255, 255, 0.6);
-            margin: 1.5rem auto;
+            margin: 1.2rem auto;
         }
 
         /* ===== ANIMATIONS ===== */
@@ -829,65 +822,62 @@
             to { opacity: 1; transform: scaleX(1); }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== FALLING PETALS ===== */
-        .petal {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9990;
-            animation: petalFall linear forwards;
-        }
-        @keyframes petalFall {
-            0% { opacity: 0; transform: translateY(-5vh) rotate(0deg) translateX(0); }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.15; }
-            100% { opacity: 0; transform: translateY(105vh) rotate(360deg) translateX(60px); }
-        }
-
-        /* ===== RESPONSIVE TWEAKS ===== */
-        @media (max-width: 480px) {
-            section { padding: 60px 16px; }
-            nav { padding: 1.2rem 1rem; }
-            .nav-inner { gap: 1rem; }
-            .venue-info { padding: 2rem 1.5rem; }
-        }
-
-        /* ===== FILM GRAIN ===== */
-        .film-grain {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            animation: grain 2s steps(2) infinite;
-        }
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            10% { transform: translate(-5%, -10%); }
-            30% { transform: translate(3%, -15%); }
-            50% { transform: translate(12%, 9%); }
-            70% { transform: translate(9%, 4%); }
-            90% { transform: translate(-1%, 7%); }
-        }
-
         .reveal, .program-item {
             visibility: hidden;
+        }
+
+        /* ===== MOBILE & IPHONE ADAPTATION ===== */
+        @media (max-width: 768px) {
+            section { padding: 75px 20px; }
+            .section-header { margin-bottom: 3rem; }
+
+            nav { padding: 1.2rem 1.5rem; }
+            nav.scrolled { padding: 0.9rem 1.5rem; }
+            .nav-inner { gap: 1.4rem; }
+            nav a { font-size: 9px; letter-spacing: 2px; }
+            
+            /* Поднимаем текст еще выше на мобилках в небо */
+            .hero-content { transform: translateY(-18vh); }
+
+            /* Идеальный порядок: Текст -> Фото (без инверсии) */
+            .story-block-side {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .story-text {
+                text-align: center;
+            }
+            .story-block-side .story-photo-wrap {
+                height: 340px;
+            }
+            .story-container { gap: 3.5rem; }
+
+            .info-mosaic-section { padding: 4.5rem 16px; }
+            .info-mosaic-grid { grid-template-columns: 1fr; }
+            .mosaic-card { padding: 2.2rem 1.5rem; }
+            .mosaic-card.bento-program,
+            .mosaic-card.bento-venue { grid-column: 1 / -1; }
+
+            /* Жесткая сетка для таймера на 4 колонки в один ряд */
+            .countdown-grid {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+                width: 100%;
+            }
+            .countdown-card { 
+                width: auto; 
+                padding: 1.2rem 0.2rem; 
+            }
+            .countdown-number { font-size: 1.55rem; }
+            .countdown-label { font-size: 8px; }
+
+            .attendance-options { flex-direction: column; }
+            .footer-section { padding-top: 18vh; }
         }
     </style>
 </head>
 <body>
-    <!-- Film Grain -->
-    <div class="film-grain"></div>
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loading">
@@ -905,10 +895,10 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (First Photo with Smooth Parallax) -->
     <section class="hero" id="home">
+        <div class="parallax-bg hero-bg-img"></div>
         <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <p class="hero-invite">Мы приглашаем вас на нашу свадьбу</p>
             <h1 class="hero-names">Дина <span class="amp">&</span> Денис</h1>
@@ -916,14 +906,13 @@
             <p class="hero-date">27 мая 2027</p>
             <p class="hero-venue">Резиденция Мария · Энгельс</p>
         </div>
-
         <div class="hero-scroll">
             <span class="hero-scroll-text">Scroll</span>
             <div class="hero-scroll-line"></div>
         </div>
     </section>
 
-    <!-- Love Story -->
+    <!-- Love Story (All 3 Photos in 100% Unified Style) -->
     <section class="story-section" id="story">
         <div class="section-header">
             <span class="section-label reveal">Наша история</span>
@@ -951,7 +940,7 @@
                 </div>
             </div>
 
-            <!-- 3. Предложение (с велосипедом) -->
+            <!-- 3. Предложение в Кисловодске -->
             <div class="story-block-side reverse reveal">
                 <div class="story-text">
                     <div class="story-year">27 апреля 2026 года</div>
@@ -963,7 +952,7 @@
                 </div>
             </div>
 
-            <!-- 4. День свадьбы (текст слева, фото справа) -->
+            <!-- 4. День нашей свадьбы -->
             <div class="story-block-side reveal">
                 <div class="story-text">
                     <div class="story-year">27 мая 2027</div>
@@ -971,7 +960,7 @@
                     <div class="story-desc">День, когда мы соединяем наши судьбы и начинаем новую главу — и мы безмерно рады разделить его с вами.</div>
                 </div>
                 <div class="story-photo-wrap">
-                    <img src="image/photo_2026-11-09_11-29-20.jpg" alt="Заветное «Да!»" class="story-photo" loading="lazy">
+                    <img src="image/photo_2026-11-09_11-29-20.jpg" alt="День нашей свадьбы" class="story-photo" loading="lazy">
                 </div>
             </div>
         </div>
@@ -984,7 +973,7 @@
             <!-- Countdown -->
             <div class="mosaic-card bento-countdown full-width reveal">
                 <h2 class="mosaic-title">До нашего торжества</h2>
-                <div class="countdown-grid" style="margin-top:0;">
+                <div class="countdown-grid">
                     <div class="countdown-card">
                         <span class="countdown-number" id="days">---</span>
                         <span class="countdown-label">дней</span>
@@ -1042,13 +1031,12 @@
             <!-- Venue -->
             <div class="mosaic-card bento-venue reveal">
                 <h2 class="mosaic-title">Место проведения</h2>
-                <div class="venue-info" style="padding:0; text-align:center; box-shadow:none; border:none; background:transparent;">
-                    <h3 class="venue-name" style="font-size: 1.5rem;">Резиденция Мария</h3>
+                <div style="text-align:center;">
+                    <h3 class="venue-name">Резиденция Мария</h3>
                     <p class="venue-address">Энгельс, Саратовская область</p>
                 </div>
-                <!-- Yandex Map -->
                 <div class="mosaic-map">
-                    <iframe src="https://yandex.ru/map-widget/v1/?text=Резиденция%20Мария%20Энгельс%20Саратовская%20область" allowfullscreen="true"></iframe>
+                    <iframe src="https://yandex.ru/map-widget/v1/?text=Резиденция%20Мария%20Энгельс%20Саратовская%20область" allowfullscreen="true" loading="lazy"></iframe>
                 </div>
             </div>
 
@@ -1115,15 +1103,16 @@
         </div>
     </div>
 
-    <!-- Combined Footer & Telegram Chat -->
+    <!-- Combined Footer & Telegram Chat (Final Photo with Identical Smooth Parallax) -->
     <footer class="footer-section">
+        <div class="parallax-bg footer-bg-img"></div>
         <div class="footer-overlay"></div>
         
         <div class="footer-chat-content reveal">
             <p class="chat-label">Будьте на связи</p>
             <h3 class="chat-title">Присоединяйтесь к нашему свадебному чату</h3>
             <p class="chat-desc">Здесь мы будем делиться всеми важными новостями, таймингом и фотографиями</p>
-            <a href="https://t.me/+uA4WprUaBc44ZDAy" target="_blank" class="chat-link magnetic">
+            <a href="https://t.me/+uA4WprUaBc44ZDAy" target="_blank" rel="noopener" class="chat-link magnetic">
                 Вступить в Telegram-чат <span class="arrow">⟶</span>
             </a>
         </div>
@@ -1146,7 +1135,7 @@
     window.addEventListener('load', () => {
         setTimeout(() => {
             document.getElementById('loading').classList.add('hidden');
-        }, 1800);
+        }, 1200);
     });
 
     // ========== NAV SCROLL ==========
@@ -1166,43 +1155,47 @@
     // ========== GSAP ANIMATIONS ==========
     gsap.registerPlugin(ScrollTrigger);
 
+    // Плавное появление блоков при скролле
     gsap.utils.toArray('.reveal, .program-item').forEach(el => {
         gsap.fromTo(el, 
-            { autoAlpha: 0, y: 30 },
+            { autoAlpha: 0, y: 25 },
             { 
                 autoAlpha: 1, 
                 y: 0, 
-                duration: 1, 
+                duration: 0.9, 
                 ease: "power2.out", 
-                scrollTrigger: { trigger: el, start: "top 85%" }
+                scrollTrigger: { trigger: el, start: "top 88%" }
             }
         );
     });
 
-    // Only apply parallax if not on a touch device to avoid iOS jitter
-    if (!('ontouchstart' in window)) {
-        gsap.to(".hero", {
-            backgroundPosition: "50% 80%",
+    // Безупречный и безопасный параллакс для Главного экрана и Подвала
+    gsap.fromTo(".hero-bg-img", 
+        { yPercent: -15 },
+        { 
+            yPercent: 15, 
             ease: "none",
             scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
-        });
-        
-        gsap.to(".story-photo", {
-            objectPosition: "50% 80%",
-            ease: "none",
-            scrollTrigger: { trigger: ".story-photo-wrap", start: "top bottom", end: "bottom top", scrub: true }
-        });
-    }
+        }
+    );
 
-    // ========== MAGNETIC BUTTONS ==========
-    // Disabled on mobile for better UX
+    gsap.fromTo(".footer-bg-img", 
+        { yPercent: -15 },
+        { 
+            yPercent: 15, 
+            ease: "none",
+            scrollTrigger: { trigger: ".footer-section", start: "top bottom", end: "bottom top", scrub: true }
+        }
+    );
+
+    // ========== MAGNETIC BUTTONS (PC ONLY) ==========
     if (!('ontouchstart' in window)) {
         document.querySelectorAll('.magnetic').forEach(btn => {
             btn.addEventListener('mousemove', e => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+                gsap.to(btn, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: "power2.out" });
             });
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
@@ -1211,7 +1204,7 @@
     }
 
     // ========== COUNTDOWN ==========
-    const weddingDate = new Date('2027-05-27T16:00:00+03:00');
+    const weddingDate = new Date('2027-05-27T15:00:00+04:00');
     function updateCountdown() {
         const diff = weddingDate - new Date();
         if (diff <= 0) {
@@ -1225,23 +1218,6 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
-
-    // ========== SUBTLE PETALS ==========
-    function createPetal() {
-        const p = document.createElement('div');
-        p.classList.add('petal');
-        const s = Math.random() * 8 + 4;
-        const d = Math.random() * 8 + 8;
-        p.style.cssText = `
-            left:${Math.random()*100}vw; width:${s}px; height:${s}px;
-            background:hsla(25,30%,82%,0.35);
-            border-radius:50% 0 50% 50%;
-            animation-duration:${d}s;
-        `;
-        document.body.appendChild(p);
-        setTimeout(() => p.remove(), (d + 1) * 1000);
-    }
-    setInterval(createPetal, 6000);
 
     // ========== TELEGRAM CONFIG ==========
     const TELEGRAM_BOT_TOKEN = '8628753070:AAF6vBOa8hhQZpjnJqP6gmM1kUkW-K21JuI';
