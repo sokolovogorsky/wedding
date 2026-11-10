@@ -163,14 +163,13 @@
             background-color: #2C2624;
         }
         
-        /* На ПК фокус смещен вниз (72% и 82%), чтобы при растяжении вертикального фото 
-           по горизонтальному монитору в кадре были вы, а не только небо */
+        /* На ПК небольшой запас 10% под параллакс и точечная фокусировка */
         .parallax-bg {
             position: absolute;
-            top: -12%;
+            top: -10%;
             left: 0;
             right: 0;
-            bottom: -12%;
+            bottom: -10%;
             background-size: cover;
             background-repeat: no-repeat;
             z-index: 1;
@@ -178,10 +177,12 @@
         }
         .hero-bg-img {
             background-image: url('image/IMG_2571.jpg');
-            background-position: center 72%;
+            /* Подняли с 72% до 48%, чтобы головы были полностью в кадре на широком экране */
+            background-position: center 48%;
         }
         .footer-bg-img {
             background-image: url('image/IMG_5829.jpg');
+            /* Нижняя фотка оставлена на 82%, так как села отлично */
             background-position: center 82%;
         }
         .hero-overlay {
@@ -827,7 +828,7 @@
             visibility: hidden;
         }
 
-        /* ===== MOBILE & IPHONE ADAPTATION ===== */
+        /* ===== MOBILE & IPHONE ADAPTATION (БЕЗ ПАРАЛЛАКСА, ИДЕАЛЬНАЯ СТАТИКА) ===== */
         @media (max-width: 768px) {
             section { padding: 75px 20px; }
             .section-header { margin-bottom: 3rem; }
@@ -837,8 +838,12 @@
             .nav-inner { gap: 1.4rem; }
             nav a { font-size: 9px; letter-spacing: 2px; }
             
-            /* На телефонах экран вертикальный, поэтому возвращаем центровку */
-            .parallax-bg { top: -18%; bottom: -18%; }
+            /* На телефонах убираем параллакс-буфер: фото стоит ровно 1:1 без рывков */
+            .parallax-bg {
+                top: 0;
+                bottom: 0;
+                will-change: auto;
+            }
             .hero-bg-img { background-position: center center; }
             .footer-bg-img { background-position: center center; }
             .hero-content { transform: translateY(-16vh); }
@@ -1167,26 +1172,27 @@
         );
     });
 
-    gsap.fromTo(".hero-bg-img", 
-        { yPercent: -8 },
-        { 
-            yPercent: 8, 
-            ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1.2 }
-        }
-    );
+    // Параллакс включается ТОЛЬКО на компьютерах (на iPhone и смартфонах фон статичный и не дергается)
+    const isDesktop = window.matchMedia("(min-width: 769px) and (hover: hover)").matches;
+    if (isDesktop) {
+        gsap.fromTo(".hero-bg-img", 
+            { yPercent: -7 },
+            { 
+                yPercent: 7, 
+                ease: "none",
+                scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
+            }
+        );
 
-    gsap.fromTo(".footer-bg-img", 
-        { yPercent: -8 },
-        { 
-            yPercent: 8, 
-            ease: "none",
-            scrollTrigger: { trigger: ".footer-section", start: "top bottom", end: "bottom top", scrub: 1.2 }
-        }
-    );
+        gsap.fromTo(".footer-bg-img", 
+            { yPercent: -7 },
+            { 
+                yPercent: 7, 
+                ease: "none",
+                scrollTrigger: { trigger: ".footer-section", start: "top bottom", end: "bottom top", scrub: 1 }
+            }
+        );
 
-    // ========== MAGNETIC BUTTONS (PC ONLY) ==========
-    if (!('ontouchstart' in window)) {
         document.querySelectorAll('.magnetic').forEach(btn => {
             btn.addEventListener('mousemove', e => {
                 const rect = btn.getBoundingClientRect();
@@ -1216,7 +1222,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // ========== TELEGRAM CONFIG & ROBUST RSVP SENDER ==========
+    // ========== TELEGRAM CONFIG & MULTI-ROUTE SENDER ==========
     const TELEGRAM_BOT_TOKEN = '8628753070:AAF6vBOa8hhQZpjnJqP6gmM1kUkW-K21JuI';
     const TELEGRAM_CHAT_ID = '-5533327993';
 
@@ -1227,47 +1233,67 @@
             .replace(/>/g, '&gt;');
     }
 
-    async function sendToTelegramWithFallback(chatId, htmlText) {
-        const directUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-        const payload = JSON.stringify({
-            chat_id: chatId,
+    async function fetchWithTimeout(url, options, timeoutMs) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+            return await fetch(url, { ...options, signal: controller.signal });
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    async function sendToTelegramReliable(chatId, htmlText) {
+        const params = new URLSearchParams({
+            chat_id: String(chatId),
             text: htmlText,
             parse_mode: 'HTML'
         });
+        const targetGetUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?${params.toString()}`;
 
-        // Попытка 1: Прямой запрос с жестким таймаутом 7 секунд
-        try {
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 7000);
-            const resp = await fetch(directUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: payload,
-                signal: controller.signal
-            });
-            clearTimeout(timer);
-            const data = await resp.json();
+        // Каскад из 3 маршрутов с комфортным ожиданием по 15 секунд на каждый
+        const routes = [
+            () => fetchWithTimeout(
+                `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                    body: params.toString()
+                },
+                15000
+            ),
+            () => fetchWithTimeout(
+                `https://corsproxy.io/?${encodeURIComponent(targetGetUrl)}`,
+                { method: 'GET' },
+                15000
+            ),
+            () => fetchWithTimeout(
+                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetGetUrl)}`,
+                { method: 'GET' },
+                15000
+            )
+        ];
 
-            // Если группа обновилась до супергруппы, автоматически шлем на новый ID
-            if (!data.ok && data.parameters && data.parameters.migrate_to_chat_id) {
-                return await sendToTelegramWithFallback(data.parameters.migrate_to_chat_id, htmlText);
+        let lastError = null;
+        for (const attempt of routes) {
+            try {
+                const resp = await attempt();
+                const data = await resp.json();
+
+                if (data && data.ok) {
+                    return data;
+                }
+                if (data && data.parameters && data.parameters.migrate_to_chat_id) {
+                    return await sendToTelegramReliable(data.parameters.migrate_to_chat_id, htmlText);
+                }
+                if (data && data.description) {
+                    throw new Error(data.description);
+                }
+            } catch (err) {
+                lastError = err;
             }
-            return data;
-        } catch (networkErr) {
-            // Попытка 2: Если провайдер блокирует api.telegram.org напрямую (таймаут),
-            // отправляем через резервный прокси-шлюз
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(directUrl)}`;
-            const controller2 = new AbortController();
-            const timer2 = setTimeout(() => controller2.abort(), 10000);
-            const resp2 = await fetch(proxyUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: payload,
-                signal: controller2.signal
-            });
-            clearTimeout(timer2);
-            return await resp2.json();
         }
+        throw lastError || new Error('Не удалось связаться с сервером');
     }
 
     document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
@@ -1303,7 +1329,7 @@
         statusEl.textContent = '';
 
         try {
-            const data = await sendToTelegramWithFallback(TELEGRAM_CHAT_ID, message);
+            const data = await sendToTelegramReliable(TELEGRAM_CHAT_ID, message);
             if (data && data.ok) {
                 const modal = document.getElementById('thank-modal');
                 document.getElementById('modal-emoji').textContent = isAttending ? '🎉' : '💛';
@@ -1314,13 +1340,11 @@
                 modal.classList.add('active');
                 this.reset();
                 statusEl.textContent = '';
-            } else {
-                throw new Error((data && data.description) ? data.description : 'Ошибка API');
             }
         } catch (err) {
             console.error('Telegram API error:', err);
             statusEl.className = 'rsvp-status error';
-            statusEl.textContent = 'Ошибка соединения (' + (err.message || 'таймаут') + '). Напишите нам в личные сообщения';
+            statusEl.textContent = 'Не удалось отправить ответ. Пожалуйста, попробуйте ещё раз или напишите нам в Telegram';
         } finally {
             btn.disabled = false;
             btn.textContent = 'Отправить ответ';
