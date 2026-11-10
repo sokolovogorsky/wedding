@@ -163,14 +163,16 @@
             background-color: #2C2624;
         }
         
-        /* ГИГАНТСКИЙ буфер -30%, чтобы никаких квадратов и обрывов на iOS не было */
+        /* Буфер 10% на ПК, чтобы картинка не зумилась слишком сильно, 
+           но запас для плавного скролла оставался.
+           object-position сдвинут на 20% (вверх), чтобы лица всегда были видны */
         .parallax-bg {
             position: absolute;
-            top: -30%;
-            left: -5%;
-            right: -5%;
-            bottom: -30%;
-            background-position: center 25%;
+            top: -10%;
+            left: 0;
+            right: 0;
+            bottom: -10%;
+            background-position: center 20%;
             background-size: cover;
             background-repeat: no-repeat;
             z-index: 1;
@@ -181,7 +183,7 @@
         }
         .footer-bg-img {
             background-image: url('image/IMG_5829.jpg');
-            background-position: center center;
+            background-position: center 25%;
         }
         .hero-overlay {
             position: absolute;
@@ -199,8 +201,7 @@
         .hero-content {
             position: relative;
             z-index: 3;
-            /* Сдвигаем текст в небо на десктопе */
-            transform: translateY(-10vh);
+            transform: translateY(-8vh);
         }
 
         .hero-invite {
@@ -328,7 +329,7 @@
             margin: 1.5rem auto 0;
         }
 
-        /* ===== STORY (UNIFIED PHOTO CARDS) ===== */
+        /* ===== STORY (UNIFIED & PROPORTIONAL PHOTO CARDS) ===== */
         .story-section { background: var(--white); }
 
         .story-container {
@@ -359,21 +360,25 @@
             direction: ltr;
         }
 
-        /* Единый стиль всех трех карточек с фото в Истории */
+        /* Идеальные пропорции 3:4 для фото. Высота подстраивается под ширину 
+           экрана автоматически, гарантируя, что фото не сплющится на ПК */
         .story-photo-wrap {
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 12px 32px rgba(0,0,0,0.07);
             border: 1px solid var(--border-light);
             background: var(--alabaster);
-            height: 360px;
             width: 100%;
+            aspect-ratio: 3 / 4;
+            max-height: 520px; /* Защита от перерастяжения на огромных мониторах */
+            margin: 0 auto;
         }
         .story-photo {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 30%;
+            /* Фокус смещен чуть вверх (20%), чтобы лица всегда были видны */
+            object-position: center 20%; 
             display: block;
             transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -565,7 +570,7 @@
             border-bottom: 1px solid var(--border);
             color: var(--text-primary);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 16px; /* Защита от авто-зума в Safari на iPhone */
+            font-size: 16px;
             font-weight: 400;
             transition: all var(--transition);
             outline: none;
@@ -836,19 +841,17 @@
             .nav-inner { gap: 1.4rem; }
             nav a { font-size: 9px; letter-spacing: 2px; }
             
-            /* Поднимаем текст еще выше на мобилках в небо */
-            .hero-content { transform: translateY(-18vh); }
+            /* Буфер для Айфона увеличен для гарантии чистого скролла */
+            .parallax-bg { top: -20%; bottom: -20%; }
+            .hero-content { transform: translateY(-16vh); }
 
-            /* Идеальный порядок: Текст -> Фото (без инверсии) */
+            /* История на мобилках */
             .story-block-side {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
             .story-text {
                 text-align: center;
-            }
-            .story-block-side .story-photo-wrap {
-                height: 340px;
             }
             .story-container { gap: 3.5rem; }
 
@@ -858,7 +861,6 @@
             .mosaic-card.bento-program,
             .mosaic-card.bento-venue { grid-column: 1 / -1; }
 
-            /* Жесткая сетка для таймера на 4 колонки в один ряд */
             .countdown-grid {
                 display: grid !important;
                 grid-template-columns: repeat(4, 1fr);
@@ -895,7 +897,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section (First Photo with Smooth Parallax) -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="parallax-bg hero-bg-img"></div>
         <div class="hero-overlay"></div>
@@ -912,7 +914,7 @@
         </div>
     </section>
 
-    <!-- Love Story (All 3 Photos in 100% Unified Style) -->
+    <!-- Love Story -->
     <section class="story-section" id="story">
         <div class="section-header">
             <span class="section-label reveal">Наша история</span>
@@ -1103,7 +1105,7 @@
         </div>
     </div>
 
-    <!-- Combined Footer & Telegram Chat (Final Photo with Identical Smooth Parallax) -->
+    <!-- Combined Footer & Telegram Chat -->
     <footer class="footer-section">
         <div class="parallax-bg footer-bg-img"></div>
         <div class="footer-overlay"></div>
@@ -1169,22 +1171,22 @@
         );
     });
 
-    // Безупречный и безопасный параллакс для Главного экрана и Подвала
+    // Уменьшенный шаг параллакса (yPercent 8) с плавной интерполяцией (scrub: 1.2)
     gsap.fromTo(".hero-bg-img", 
-        { yPercent: -15 },
+        { yPercent: -8 },
         { 
-            yPercent: 15, 
+            yPercent: 8, 
             ease: "none",
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1.2 }
         }
     );
 
     gsap.fromTo(".footer-bg-img", 
-        { yPercent: -15 },
+        { yPercent: -8 },
         { 
-            yPercent: 15, 
+            yPercent: 8, 
             ease: "none",
-            scrollTrigger: { trigger: ".footer-section", start: "top bottom", end: "bottom top", scrub: true }
+            scrollTrigger: { trigger: ".footer-section", start: "top bottom", end: "bottom top", scrub: 1.2 }
         }
     );
 
