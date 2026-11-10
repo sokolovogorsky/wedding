@@ -163,16 +163,14 @@
             background-color: #2C2624;
         }
         
-        /* Буфер 10% на ПК, чтобы картинка не зумилась слишком сильно, 
-           но запас для плавного скролла оставался.
-           object-position сдвинут на 20% (вверх), чтобы лица всегда были видны */
+        /* На ПК фокус смещен вниз (72% и 82%), чтобы при растяжении вертикального фото 
+           по горизонтальному монитору в кадре были вы, а не только небо */
         .parallax-bg {
             position: absolute;
-            top: -10%;
+            top: -12%;
             left: 0;
             right: 0;
-            bottom: -10%;
-            background-position: center 20%;
+            bottom: -12%;
             background-size: cover;
             background-repeat: no-repeat;
             z-index: 1;
@@ -180,15 +178,16 @@
         }
         .hero-bg-img {
             background-image: url('image/IMG_2571.jpg');
+            background-position: center 72%;
         }
         .footer-bg-img {
             background-image: url('image/IMG_5829.jpg');
-            background-position: center 25%;
+            background-position: center 82%;
         }
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.28);
             z-index: 2;
         }
         .footer-overlay {
@@ -201,7 +200,7 @@
         .hero-content {
             position: relative;
             z-index: 3;
-            transform: translateY(-8vh);
+            transform: translateY(-6vh);
         }
 
         .hero-invite {
@@ -360,8 +359,6 @@
             direction: ltr;
         }
 
-        /* Идеальные пропорции 3:4 для фото. Высота подстраивается под ширину 
-           экрана автоматически, гарантируя, что фото не сплющится на ПК */
         .story-photo-wrap {
             border-radius: 12px;
             overflow: hidden;
@@ -369,16 +366,15 @@
             border: 1px solid var(--border-light);
             background: var(--alabaster);
             width: 100%;
-            aspect-ratio: 3 / 4;
-            max-height: 520px; /* Защита от перерастяжения на огромных мониторах */
+            aspect-ratio: 4 / 5;
+            max-height: 460px;
             margin: 0 auto;
         }
         .story-photo {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Фокус смещен чуть вверх (20%), чтобы лица всегда были видны */
-            object-position: center 20%; 
+            object-position: center 50%;
             display: block;
             transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -654,7 +650,7 @@
         .rsvp-status {
             text-align: center;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-style: italic;
             min-height: 1.5em;
         }
@@ -841,11 +837,12 @@
             .nav-inner { gap: 1.4rem; }
             nav a { font-size: 9px; letter-spacing: 2px; }
             
-            /* Буфер для Айфона увеличен для гарантии чистого скролла */
-            .parallax-bg { top: -20%; bottom: -20%; }
+            /* На телефонах экран вертикальный, поэтому возвращаем центровку */
+            .parallax-bg { top: -18%; bottom: -18%; }
+            .hero-bg-img { background-position: center center; }
+            .footer-bg-img { background-position: center center; }
             .hero-content { transform: translateY(-16vh); }
 
-            /* История на мобилках */
             .story-block-side {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
@@ -1157,7 +1154,6 @@
     // ========== GSAP ANIMATIONS ==========
     gsap.registerPlugin(ScrollTrigger);
 
-    // Плавное появление блоков при скролле
     gsap.utils.toArray('.reveal, .program-item').forEach(el => {
         gsap.fromTo(el, 
             { autoAlpha: 0, y: 25 },
@@ -1171,7 +1167,6 @@
         );
     });
 
-    // Уменьшенный шаг параллакса (yPercent 8) с плавной интерполяцией (scrub: 1.2)
     gsap.fromTo(".hero-bg-img", 
         { yPercent: -8 },
         { 
@@ -1221,11 +1216,60 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // ========== TELEGRAM CONFIG ==========
+    // ========== TELEGRAM CONFIG & ROBUST RSVP SENDER ==========
     const TELEGRAM_BOT_TOKEN = '8628753070:AAF6vBOa8hhQZpjnJqP6gmM1kUkW-K21JuI';
     const TELEGRAM_CHAT_ID = '-5533327993';
 
-    // ========== RSVP FORM ==========
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    async function sendToTelegramWithFallback(chatId, htmlText) {
+        const directUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        const payload = JSON.stringify({
+            chat_id: chatId,
+            text: htmlText,
+            parse_mode: 'HTML'
+        });
+
+        // Попытка 1: Прямой запрос с жестким таймаутом 7 секунд
+        try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 7000);
+            const resp = await fetch(directUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                signal: controller.signal
+            });
+            clearTimeout(timer);
+            const data = await resp.json();
+
+            // Если группа обновилась до супергруппы, автоматически шлем на новый ID
+            if (!data.ok && data.parameters && data.parameters.migrate_to_chat_id) {
+                return await sendToTelegramWithFallback(data.parameters.migrate_to_chat_id, htmlText);
+            }
+            return data;
+        } catch (networkErr) {
+            // Попытка 2: Если провайдер блокирует api.telegram.org напрямую (таймаут),
+            // отправляем через резервный прокси-шлюз
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(directUrl)}`;
+            const controller2 = new AbortController();
+            const timer2 = setTimeout(() => controller2.abort(), 10000);
+            const resp2 = await fetch(proxyUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                signal: controller2.signal
+            });
+            clearTimeout(timer2);
+            return await resp2.json();
+        }
+    }
+
     document.getElementById('rsvp-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btn = document.getElementById('rsvp-btn');
@@ -1246,25 +1290,21 @@
         const statusEmoji = isAttending ? '✅' : '❌';
         const statusText = isAttending ? 'ПРИДЁТ' : 'НЕ ПРИДЁТ';
 
-        let message = `💍 *Свадьба Дины & Дениса — RSVP*\n\n`;
-        message += `${statusEmoji} *${statusText}*\n\n`;
-        message += `👤 *Гость:* ${name}\n`;
-        if (isAttending) message += `👥 *Количество:* ${guestCount}\n`;
-        if (song) message += `🎵 *Музыка:* ${song}\n`;
-        if (wishes) message += `💬 *Пожелания:* ${wishes}\n`;
-        message += `\n🕐 _${new Date().toLocaleString('ru-RU')}_`;
+        let message = `💍 <b>Свадьба Дины &amp; Дениса — RSVP</b>\n\n`;
+        message += `${statusEmoji} <b>${statusText}</b>\n\n`;
+        message += `👤 <b>Гость:</b> ${escapeHtml(name)}\n`;
+        if (isAttending) message += `👥 <b>Количество:</b> ${escapeHtml(guestCount)}\n`;
+        if (song) message += `🎵 <b>Музыка:</b> ${escapeHtml(song)}\n`;
+        if (wishes) message += `💬 <b>Пожелания:</b> ${escapeHtml(wishes)}\n`;
+        message += `\n🕐 <i>${new Date().toLocaleString('ru-RU')}</i>`;
 
         btn.disabled = true;
         btn.textContent = 'Отправляем...';
+        statusEl.textContent = '';
 
         try {
-            const resp = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: 'Markdown' })
-            });
-            const data = await resp.json();
-            if (data.ok) {
+            const data = await sendToTelegramWithFallback(TELEGRAM_CHAT_ID, message);
+            if (data && data.ok) {
                 const modal = document.getElementById('thank-modal');
                 document.getElementById('modal-emoji').textContent = isAttending ? '🎉' : '💛';
                 document.getElementById('modal-title').textContent = 'Спасибо!';
@@ -1275,12 +1315,12 @@
                 this.reset();
                 statusEl.textContent = '';
             } else {
-                throw new Error(data.description || 'Ошибка');
+                throw new Error((data && data.description) ? data.description : 'Ошибка API');
             }
         } catch (err) {
             console.error('Telegram API error:', err);
             statusEl.className = 'rsvp-status error';
-            statusEl.textContent = 'Не удалось отправить. Свяжитесь с нами напрямую';
+            statusEl.textContent = 'Ошибка соединения (' + (err.message || 'таймаут') + '). Напишите нам в личные сообщения';
         } finally {
             btn.disabled = false;
             btn.textContent = 'Отправить ответ';
